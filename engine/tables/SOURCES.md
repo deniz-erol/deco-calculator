@@ -57,11 +57,13 @@ unverified data.
   page at high DPI and mapping every cell to its column by coordinate; contiguity of the
   surface-interval windows was verified programmatically.
 - **Gaps:** The manual's shallow depths 10/15/20 fsw are omitted to match the 9-7 ladder (25+ fsw).
-  Two `**`/undeterminable cells at 25 fsw (groups O and Z) are deliberately omitted rather than
-  mis-encoded; the engine surfaces a clean "no RNT cell seeded" warning for them. No `**`
-  (RNT-undeterminable) cells fall within the 25-190 fsw range included here, so the
-  para 9-9.1 subpara 8 substitute-depth procedure is not exercised by the shipped data. Pending a
-  final human cell-by-cell spot-check.
+  Two substitute-rule cells at 25 fsw (groups O and Z) — the manual's "read down to the 30 fsw
+  repetitive-dive depth" footnote, **not** RNT-undeterminable `**` cells — are deliberately omitted
+  rather than mis-encoded (encoding them as `**` would emit the wrong para 9-9.1 subpara 8
+  citation); the engine surfaces a clean "no RNT cell seeded" warning for them. The genuine `**`
+  (RNT-undeterminable, para 9-9.1 subpara 8) cells occur only at 10/15/20 fsw, outside the shipped
+  25-190 fsw ladder, so subpara 8 is not exercised by the current data. Pending a final human
+  cell-by-cell spot-check.
 
 ### `nitrox_ead_10-1.json` — Table 10-1 (Equivalent Air Depth)
 - **Verified:** No (`verified: false`) — pending a final manual cell-by-cell spot-check.
