@@ -1,0 +1,38 @@
+# User profile data (local persistence, never committed)
+data/profiles/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# pytest / tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pip-tmp/
+.playwright-cli/
+
+# Transcription scratch — pre-rendered table page images (26 MB, not needed at runtime)
+docs/tables/_render/
+
+# Logs
+*.log
+
+# Streamlit
+.streamlit/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

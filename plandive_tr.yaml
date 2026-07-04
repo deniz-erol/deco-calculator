@@ -1,0 +1,247 @@
+- generic [ref=e2]:
+  - generic [ref=e7]:
+    - button "keyboard_double_arrow_left" [ref=e203] [cursor=pointer]:
+      - generic [ref=e205]: keyboard_double_arrow_left
+    - list [ref=e10]:
+      - listitem [ref=e11]:
+        - link "Home" [ref=e13] [cursor=pointer]:
+          - /url: http://localhost:8765/
+          - paragraph [ref=e16]: Home
+      - listitem [ref=e17]:
+        - link "Plan Dive" [active] [ref=e19] [cursor=pointer]:
+          - /url: http://localhost:8765/Plan_Dive
+          - paragraph [ref=e22]: Plan Dive
+      - listitem [ref=e23]:
+        - link "Dive Series" [ref=e25] [cursor=pointer]:
+          - /url: http://localhost:8765/Dive_Series
+          - paragraph [ref=e28]: Dive Series
+      - listitem [ref=e29]:
+        - link "Profiles" [ref=e31] [cursor=pointer]:
+          - /url: http://localhost:8765/Profiles
+          - paragraph [ref=e34]: Profiles
+      - listitem [ref=e35]:
+        - link "About" [ref=e37] [cursor=pointer]:
+          - /url: http://localhost:8765/About
+          - paragraph [ref=e40]: About
+    - generic [ref=e44]:
+      - generic [ref=e216]:
+        - paragraph [ref=e220]: Display units
+        - radiogroup "Display units" [ref=e221] [cursor=pointer]:
+          - generic [ref=e222]:
+            - radio "Feet (fsw)" [checked]
+            - paragraph [ref=e227]: Feet (fsw)
+          - generic [ref=e228]:
+            - radio "Meters"
+            - paragraph [ref=e233]: Meters
+      - generic [ref=e235]:
+        - paragraph [ref=e239]: Language
+        - radiogroup "Language" [ref=e240] [cursor=pointer]:
+          - generic [ref=e241]:
+            - radio "English" [checked]
+            - paragraph [ref=e246]: English
+          - generic [ref=e247]:
+            - radio "Türkçe"
+            - paragraph [ref=e252]: Türkçe
+      - separator [ref=e257]
+      - paragraph [ref=e262]:
+        - text: This page plans one standalone dive. For chained repetitive dives, use
+        - strong [ref=e263]: Dive Series
+        - text: .
+  - generic [ref=e3]:
+    - banner [ref=e85]:
+      - generic [ref=e88]:
+        - button "Deploy" [ref=e90] [cursor=pointer]:
+          - generic [ref=e92]: Deploy
+        - button "Main menu" [ref=e94] [cursor=pointer]:
+          - img [ref=e95]
+    - generic [ref=e98]:
+      - heading "Plan a Single Dive" [level=1] [ref=e268]:
+        - text: Plan a Single Dive
+        - generic [ref=e269]:
+          - link "Link to heading":
+            - /url: "#plan-a-single-dive"
+            - img
+      - alert [ref=e272]:
+        - generic [ref=e274]:
+          - generic [ref=e277]: ⚠️
+          - paragraph [ref=e279]:
+            - strong [ref=e280]: Academic prototype for a thesis presentation.
+            - text: This tool reproduces US Navy Diving Manual (Rev 7) decompression
+            - emphasis [ref=e281]: tables
+            - text: for demonstration only. It is
+            - strong [ref=e282]: NOT
+            - text: a certified dive-planning tool and must
+            - strong [ref=e283]: never
+            - text: be used for operational dive planning. Decompression errors can cause serious injury or death — always plan real dives with certified software, current manuals, and qualified supervision.
+      - heading "Dive parameters" [level=3] [ref=e288]:
+        - text: Dive parameters
+        - generic [ref=e289]:
+          - link "Link to heading":
+            - /url: "#dive-parameters"
+            - img
+      - generic [ref=e295]:
+        - generic [ref=e296]:
+          - paragraph [ref=e299]: Slider step size
+          - button "Help for Slider step size" [ref=e303] [cursor=pointer]:
+            - img [ref=e304]
+        - radiogroup "button group" [ref=e307]:
+          - button "1" [ref=e308] [cursor=pointer]:
+            - paragraph [ref=e312]: "1"
+          - button "5" [ref=e313] [cursor=pointer]:
+            - paragraph [ref=e317]: "5"
+          - button "10" [ref=e318] [cursor=pointer]:
+            - paragraph [ref=e322]: "10"
+      - generic [ref=e326]:
+        - generic [ref=e330]:
+          - paragraph [ref=e334]: Gas
+          - generic [ref=e336]:
+            - generic [ref=e337]:
+              - generic [ref=e338]: Air
+              - combobox "Selected Air. Gas" [ref=e340]
+            - img "open" [ref=e342]
+        - generic [ref=e348]:
+          - paragraph [ref=e352]: Depth (fsw)
+          - generic [ref=e353]:
+            - slider "Depth (fsw)" [ref=e357]:
+              - generic:
+                - generic:
+                  - paragraph: "100.00"
+            - generic:
+              - generic:
+                - paragraph: "0.00"
+              - generic:
+                - paragraph: "190.00"
+        - generic [ref=e363]:
+          - paragraph [ref=e367]: Bottom time (min)
+          - generic [ref=e368]:
+            - slider "Bottom time (min)" [ref=e372]:
+              - generic:
+                - generic:
+                  - paragraph: "25.00"
+            - generic:
+              - generic:
+                - paragraph: "1.00"
+              - generic:
+                - paragraph: "200.00"
+      - separator [ref=e378]
+      - alert [ref=e381]:
+        - generic [ref=e383]:
+          - generic [ref=e386]: ⚠️
+          - paragraph [ref=e388]: Transcribed from US Navy Rev 7 references (2026-07-04); not yet cross-checked cell-by-cell against a physical manual — verify before any real use.
+      - heading "Result summary" [level=3] [ref=e393]:
+        - text: Result summary
+        - generic [ref=e394]:
+          - link "Link to heading":
+            - /url: "#result-summary"
+            - img
+      - generic [ref=e396]:
+        - generic [ref=e401]:
+          - paragraph [ref=e404]: Status
+          - paragraph [ref=e407]: No-decompression
+        - generic [ref=e412]:
+          - paragraph [ref=e415]: NDL (min)
+          - paragraph [ref=e418]: "25"
+        - generic [ref=e423]:
+          - paragraph [ref=e426]: Time to first stop (min)
+          - paragraph [ref=e429]: —
+        - generic [ref=e434]:
+          - paragraph [ref=e437]: Repetitive group
+          - paragraph [ref=e440]: H
+      - generic [ref=e442]:
+        - generic [ref=e447]:
+          - paragraph [ref=e450]: Total stop time (min)
+          - paragraph [ref=e453]: "0"
+        - generic [ref=e458]:
+          - paragraph [ref=e461]: Residual nitrogen time (min)
+          - paragraph [ref=e464]: —
+        - generic [ref=e469]:
+          - paragraph [ref=e472]: Table source
+          - paragraph [ref=e475]: USN Rev7 Table 9-7
+      - heading "Decompression schedule" [level=3] [ref=e480]:
+        - text: Decompression schedule
+        - generic [ref=e481]:
+          - link "Link to heading":
+            - /url: "#decompression-schedule"
+            - img
+      - status [ref=e484]:
+        - paragraph [ref=e488]: No decompression stops required — this is a no-decompression dive.
+      - heading "Dive profile" [level=3] [ref=e493]:
+        - text: Dive profile
+        - generic [ref=e494]:
+          - link "Link to heading":
+            - /url: "#dive-profile"
+            - img
+      - paragraph [ref=e499]: Drag a small box on the chart to set bottom time and depth — the sliders above will update.
+      - paragraph [ref=e504]: "Tip: drag across the chart to set depth & bottom time."
+      - generic [ref=e507]:
+        - generic [ref=e509]:
+          - button "Show data" [ref=e512] [cursor=pointer]:
+            - img [ref=e513]
+          - button "Fullscreen" [ref=e518] [cursor=pointer]:
+            - img [ref=e519]
+        - generic [ref=e522]:
+          - generic "Vega visualization" [ref=e523]:
+            - img [ref=e524]:
+              - generic [ref=e529]:
+                - generic "X-axis titled 'Elapsed time (min)' for a linear scale with values from 0 to 26" [ref=e536]:
+                  - generic [ref=e538]:
+                    - generic:
+                      - generic: "0"
+                      - generic: "1"
+                      - generic: "2"
+                      - generic: "3"
+                      - generic: "4"
+                      - generic: "5"
+                      - generic: "6"
+                      - generic: "7"
+                      - generic: "8"
+                      - generic: "9"
+                      - generic: "10"
+                      - generic: "11"
+                      - generic: "12"
+                      - generic: "13"
+                      - generic: "14"
+                      - generic: "15"
+                      - generic: "16"
+                      - generic: "17"
+                      - generic: "18"
+                      - generic: "19"
+                      - generic: "20"
+                      - generic: "21"
+                      - generic: "22"
+                      - generic: "23"
+                      - generic: "24"
+                      - generic: "25"
+                      - generic: "26"
+                    - generic:
+                      - generic: Elapsed time (min)
+                - generic "Y-axis titled 'Depth (fsw)' for a linear scale with values from 108 to 0" [ref=e539]:
+                  - generic [ref=e541]:
+                    - generic:
+                      - generic: "100"
+                      - generic: "80"
+                      - generic: "60"
+                      - generic: "40"
+                      - generic: "20"
+                      - generic: "0"
+                    - generic:
+                      - generic: Depth (fsw)
+                - 'generic "Elapsed time (min): 0; Depth (fsw): 0; Time (min): 0; Phase: surface" [ref=e543]'
+                - generic [ref=e544]:
+                  - 'generic "Elapsed time (min): 0; Depth (fsw): 0; Time (min): 0; Phase: surface" [ref=e545]'
+                  - 'generic "Elapsed time (min): 0; Depth (fsw): 100; Time (min): 0; Phase: descent" [ref=e546]'
+                  - 'generic "Elapsed time (min): 25; Depth (fsw): 100; Time (min): 25; Phase: bottom" [ref=e547]'
+                  - 'generic "Elapsed time (min): 25; Depth (fsw): 0; Time (min): 25; Phase: ascent" [ref=e548]'
+                - generic [ref=e549]:
+                  - 'generic "time_min: 0; depth_display: 0; Time (min): 0; Depth (fsw): 0.0; Phase: surface" [ref=e550]'
+                  - 'generic "time_min: 0; depth_display: 100; Time (min): 0; Depth (fsw): 100.0; Phase: descent" [ref=e551]'
+                  - 'generic "time_min: 25; depth_display: 100; Time (min): 25; Depth (fsw): 100.0; Phase: bottom" [ref=e552]'
+                  - 'generic "time_min: 25; depth_display: 0; Time (min): 25; Depth (fsw): 0.0; Phase: ascent" [ref=e553]'
+                - generic [ref=e556]:
+                  - generic "Title text 'Planned decompression profile'":
+                    - generic: Planned decompression profile
+                  - generic "Subtitle text 'Square-profile assumption per the US Navy tables — not a recorded dive trace'":
+                    - generic: Square-profile assumption per the US Navy tables — not a recorded dive trace
+          - group "Click to view actions":
+            - img [ref=e558] [cursor=pointer]
+      - paragraph [ref=e566]: "Idealized plan the US Navy table assumes: maximum depth for the entire bottom time, then a defined ascent with any required stops — not a recording of an actual dive."

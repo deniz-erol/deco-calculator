@@ -1,0 +1,3073 @@
+{
+  "meta": {
+    "table": "9-9",
+    "title": "Air Decompression Table",
+    "source": "US Navy Diving Manual Rev 7 Change A (2018)",
+    "source_url": "https://www.divetable.info/workshop/USN_Rev7_Tables.pdf",
+    "cross_check_url": "https://www.uhms.org/images/MEDFAQs/February-2017/2nd/US_DIVING_MANUALREV7_TT2A.pdf",
+    "verified": false,
+    "coverage_notes": "USN Rev 7 Table 9-9 AIR decompression schedules for the standard depth ladder 30-190 fsw (every 5 ft to 60, then every 10 ft to 190). AIR schedule ONLY: the manual prints two rows per bottom-time (AIR and AIR/O2); the AIR/O2 in-water-oxygen decompression row is intentionally dropped because this tool models single-gas air with no gas switching, and the repetitive (ending) group is shared across both rows, so nothing is lost for the 9-8 chain. AIR/O2 in-water-O2 schedules do exist in the source table but are out of scope and not modeled here. Only bottom-times that carry a Navy-assigned ending repetitive group are included; longer bottom-times whose Repet Group column is blank in the manual are omitted (they truncate the tail of each block and yield a clean TableRangeError rather than a fabricated group). Shallowest decompression stop is 20 fsw (Rev 7 uses no 10-fsw air stop). total_stop_min is the SUM of the AIR stop-column minutes (NOT the 'Total Ascent Time', which includes travel/ascent). time_to_first_stop_min is the manual's M:S value converted to decimal minutes. exceptional_exposure=true for rows below the boxed 'Exceptional Exposure' dividers. Transcribed by reading the official Rev 7 tables PDF page images (docs/tables/_render/page-06..24) cell-by-cell and mapping every stop cell to its stop-depth column, cross-checked two ways on every row: (1) time_to_first_stop*30 == depth - deepest_stop_depth, and (2) total_stop_min == TotalAscentTime - time_to_first_stop - 0.6667 (the fixed 20-fsw-to-surface leg). Depths 30-150 were additionally re-verified against the images and left unchanged (their auto-scraped values matched the PDF exactly). Depths 200-300 (exceptional exposure) and the AIR/O2 schedules are out of scope.",
+    "unverified_warning": "Transcribed from the official US Navy Rev 7 tables PDF (2026-07-04); spot-check against your manual before real use.",
+    "stop_depths_fsw_order": [
+      100,
+      90,
+      80,
+      70,
+      60,
+      50,
+      40,
+      30,
+      20
+    ]
+  },
+  "depths_fsw": [
+    30,
+    35,
+    40,
+    45,
+    50,
+    55,
+    60,
+    70,
+    80,
+    90,
+    100,
+    110,
+    120,
+    130,
+    140,
+    150,
+    160,
+    170,
+    180,
+    190
+  ],
+  "rows": {
+    "30": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 371,
+          "time_to_first_stop_min": 1.0,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 380,
+          "time_to_first_stop_min": 0.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 5
+            }
+          ],
+          "total_stop_min": 5,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 420,
+          "time_to_first_stop_min": 0.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 22
+            }
+          ],
+          "total_stop_min": 22,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        }
+      ]
+    },
+    "35": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 232,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 240,
+          "time_to_first_stop_min": 0.5,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 4
+            }
+          ],
+          "total_stop_min": 4,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 270,
+          "time_to_first_stop_min": 0.5,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 28
+            }
+          ],
+          "total_stop_min": 28,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 300,
+          "time_to_first_stop_min": 0.5,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 53
+            }
+          ],
+          "total_stop_min": 53,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 330,
+          "time_to_first_stop_min": 0.5,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 71
+            }
+          ],
+          "total_stop_min": 71,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        }
+      ]
+    },
+    "40": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 163,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 170,
+          "time_to_first_stop_min": 0.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 6
+            }
+          ],
+          "total_stop_min": 6,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 180,
+          "time_to_first_stop_min": 0.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 14
+            }
+          ],
+          "total_stop_min": 14,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 190,
+          "time_to_first_stop_min": 0.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 21
+            }
+          ],
+          "total_stop_min": 21,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 200,
+          "time_to_first_stop_min": 0.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 27
+            }
+          ],
+          "total_stop_min": 27,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 210,
+          "time_to_first_stop_min": 0.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 39
+            }
+          ],
+          "total_stop_min": 39,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 220,
+          "time_to_first_stop_min": 0.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 52
+            }
+          ],
+          "total_stop_min": 52,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 230,
+          "time_to_first_stop_min": 0.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 64
+            }
+          ],
+          "total_stop_min": 64,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 240,
+          "time_to_first_stop_min": 0.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 75
+            }
+          ],
+          "total_stop_min": 75,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 270,
+          "time_to_first_stop_min": 0.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 101
+            }
+          ],
+          "total_stop_min": 101,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "45": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 125,
+          "time_to_first_stop_min": 1.5,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 130,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 2
+            }
+          ],
+          "total_stop_min": 2,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 140,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 14
+            }
+          ],
+          "total_stop_min": 14,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 150,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 25
+            }
+          ],
+          "total_stop_min": 25,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 160,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 34
+            }
+          ],
+          "total_stop_min": 34,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 170,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 41
+            }
+          ],
+          "total_stop_min": 41,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 180,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 59
+            }
+          ],
+          "total_stop_min": 59,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 190,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 75
+            }
+          ],
+          "total_stop_min": 75,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 200,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 89
+            }
+          ],
+          "total_stop_min": 89,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 210,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 101
+            }
+          ],
+          "total_stop_min": 101,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 220,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 112
+            }
+          ],
+          "total_stop_min": 112,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 230,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 121
+            }
+          ],
+          "total_stop_min": 121,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 240,
+          "time_to_first_stop_min": 0.8333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 130
+            }
+          ],
+          "total_stop_min": 130,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "50": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 92,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 95,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 2
+            }
+          ],
+          "total_stop_min": 2,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 100,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 4
+            }
+          ],
+          "total_stop_min": 4,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 110,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 8
+            }
+          ],
+          "total_stop_min": 8,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 120,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 21
+            }
+          ],
+          "total_stop_min": 21,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 130,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 34
+            }
+          ],
+          "total_stop_min": 34,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 140,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 45
+            }
+          ],
+          "total_stop_min": 45,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 150,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 56
+            }
+          ],
+          "total_stop_min": 56,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 160,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 78
+            }
+          ],
+          "total_stop_min": 78,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 170,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 96
+            }
+          ],
+          "total_stop_min": 96,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 180,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 111
+            }
+          ],
+          "total_stop_min": 111,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 190,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 125
+            }
+          ],
+          "total_stop_min": 125,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 200,
+          "time_to_first_stop_min": 1.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 136
+            }
+          ],
+          "total_stop_min": 136,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "55": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 74,
+          "time_to_first_stop_min": 1.8333,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "L",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 75,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 1
+            }
+          ],
+          "total_stop_min": 1,
+          "ending_group": "L",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 80,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 4
+            }
+          ],
+          "total_stop_min": 4,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 90,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 10
+            }
+          ],
+          "total_stop_min": 10,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 100,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 17
+            }
+          ],
+          "total_stop_min": 17,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 110,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 34
+            }
+          ],
+          "total_stop_min": 34,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 120,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 48
+            }
+          ],
+          "total_stop_min": 48,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 130,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 59
+            }
+          ],
+          "total_stop_min": 59,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 140,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 84
+            }
+          ],
+          "total_stop_min": 84,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 150,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 105
+            }
+          ],
+          "total_stop_min": 105,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 160,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 123
+            }
+          ],
+          "total_stop_min": 123,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 170,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 138
+            }
+          ],
+          "total_stop_min": 138,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 180,
+          "time_to_first_stop_min": 1.1667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 151
+            }
+          ],
+          "total_stop_min": 151,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "60": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 63,
+          "time_to_first_stop_min": 2.0,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "K",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 65,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 2
+            }
+          ],
+          "total_stop_min": 2,
+          "ending_group": "L",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 70,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 7
+            }
+          ],
+          "total_stop_min": 7,
+          "ending_group": "L",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 80,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 14
+            }
+          ],
+          "total_stop_min": 14,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 90,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 23
+            }
+          ],
+          "total_stop_min": 23,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 100,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 42
+            }
+          ],
+          "total_stop_min": 42,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 110,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 57
+            }
+          ],
+          "total_stop_min": 57,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 120,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 75
+            }
+          ],
+          "total_stop_min": 75,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 130,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 102
+            }
+          ],
+          "total_stop_min": 102,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 140,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 124
+            }
+          ],
+          "total_stop_min": 124,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 150,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 143
+            }
+          ],
+          "total_stop_min": 143,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 160,
+          "time_to_first_stop_min": 1.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 158
+            }
+          ],
+          "total_stop_min": 158,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "70": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 48,
+          "time_to_first_stop_min": 2.3333,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "K",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 50,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 2
+            }
+          ],
+          "total_stop_min": 2,
+          "ending_group": "K",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 55,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 9
+            }
+          ],
+          "total_stop_min": 9,
+          "ending_group": "L",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 60,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 14
+            }
+          ],
+          "total_stop_min": 14,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 70,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 24
+            }
+          ],
+          "total_stop_min": 24,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 80,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 44
+            }
+          ],
+          "total_stop_min": 44,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 90,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 64
+            }
+          ],
+          "total_stop_min": 64,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 100,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 88
+            }
+          ],
+          "total_stop_min": 88,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 110,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 120
+            }
+          ],
+          "total_stop_min": 120,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 120,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 145
+            }
+          ],
+          "total_stop_min": 145,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 130,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 167
+            }
+          ],
+          "total_stop_min": 167,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "80": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 39,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "J",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 40,
+          "time_to_first_stop_min": 2.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 1
+            }
+          ],
+          "total_stop_min": 1,
+          "ending_group": "J",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 45,
+          "time_to_first_stop_min": 2.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 10
+            }
+          ],
+          "total_stop_min": 10,
+          "ending_group": "K",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 50,
+          "time_to_first_stop_min": 2.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 17
+            }
+          ],
+          "total_stop_min": 17,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 55,
+          "time_to_first_stop_min": 2.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 24
+            }
+          ],
+          "total_stop_min": 24,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 60,
+          "time_to_first_stop_min": 2.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 30
+            }
+          ],
+          "total_stop_min": 30,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 70,
+          "time_to_first_stop_min": 2.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 54
+            }
+          ],
+          "total_stop_min": 54,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 80,
+          "time_to_first_stop_min": 2.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 77
+            }
+          ],
+          "total_stop_min": 77,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 90,
+          "time_to_first_stop_min": 2.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 114
+            }
+          ],
+          "total_stop_min": 114,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 100,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 1
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 147
+            }
+          ],
+          "total_stop_min": 148,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 110,
+          "time_to_first_stop_min": 1.6667,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 171
+            }
+          ],
+          "total_stop_min": 177,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "90": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 33,
+          "time_to_first_stop_min": 3.0,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "J",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 2.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 4
+            }
+          ],
+          "total_stop_min": 4,
+          "ending_group": "J",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 40,
+          "time_to_first_stop_min": 2.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 14
+            }
+          ],
+          "total_stop_min": 14,
+          "ending_group": "L",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 45,
+          "time_to_first_stop_min": 2.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 23
+            }
+          ],
+          "total_stop_min": 23,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 50,
+          "time_to_first_stop_min": 2.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 31
+            }
+          ],
+          "total_stop_min": 31,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 55,
+          "time_to_first_stop_min": 2.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 39
+            }
+          ],
+          "total_stop_min": 39,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 60,
+          "time_to_first_stop_min": 2.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 56
+            }
+          ],
+          "total_stop_min": 56,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 70,
+          "time_to_first_stop_min": 2.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 83
+            }
+          ],
+          "total_stop_min": 83,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 80,
+          "time_to_first_stop_min": 2.0,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 125
+            }
+          ],
+          "total_stop_min": 130,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 90,
+          "time_to_first_stop_min": 2.0,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 13
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 158
+            }
+          ],
+          "total_stop_min": 171,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "100": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 25,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "H",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 30,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 3
+            }
+          ],
+          "total_stop_min": 3,
+          "ending_group": "J",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 15
+            }
+          ],
+          "total_stop_min": 15,
+          "ending_group": "L",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 40,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 26
+            }
+          ],
+          "total_stop_min": 26,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 45,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 36
+            }
+          ],
+          "total_stop_min": 36,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 50,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 47
+            }
+          ],
+          "total_stop_min": 47,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 55,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 65
+            }
+          ],
+          "total_stop_min": 65,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 60,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 81
+            }
+          ],
+          "total_stop_min": 81,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 70,
+          "time_to_first_stop_min": 2.3333,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 11
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 124
+            }
+          ],
+          "total_stop_min": 135,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 80,
+          "time_to_first_stop_min": 2.3333,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 21
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 160
+            }
+          ],
+          "total_stop_min": 181,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "110": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 20,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "H",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 25,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 5
+            }
+          ],
+          "total_stop_min": 5,
+          "ending_group": "I",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 30,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 14
+            }
+          ],
+          "total_stop_min": 14,
+          "ending_group": "K",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 27
+            }
+          ],
+          "total_stop_min": 27,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 40,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 39
+            }
+          ],
+          "total_stop_min": 39,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 45,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 50
+            }
+          ],
+          "total_stop_min": 50,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 50,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 71
+            }
+          ],
+          "total_stop_min": 71,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 55,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 85
+            }
+          ],
+          "total_stop_min": 90,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 60,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 13
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 111
+            }
+          ],
+          "total_stop_min": 124,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 70,
+          "time_to_first_stop_min": 2.6667,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 26
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 155
+            }
+          ],
+          "total_stop_min": 181,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "120": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 15,
+          "time_to_first_stop_min": 4.0,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "F",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 20,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 4
+            }
+          ],
+          "total_stop_min": 4,
+          "ending_group": "H",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 25,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 9
+            }
+          ],
+          "total_stop_min": 9,
+          "ending_group": "J",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 30,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 24
+            }
+          ],
+          "total_stop_min": 24,
+          "ending_group": "L",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 38
+            }
+          ],
+          "total_stop_min": 38,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 40,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 49
+            }
+          ],
+          "total_stop_min": 51,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 45,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 3
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 71
+            }
+          ],
+          "total_stop_min": 74,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 50,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 10
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 85
+            }
+          ],
+          "total_stop_min": 95,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 55,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 19
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 116
+            }
+          ],
+          "total_stop_min": 135,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 60,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 27
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 142
+            }
+          ],
+          "total_stop_min": 169,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "130": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 12,
+          "time_to_first_stop_min": 4.3333,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "F",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 15,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 3
+            }
+          ],
+          "total_stop_min": 3,
+          "ending_group": "G",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 20,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 8
+            }
+          ],
+          "total_stop_min": 8,
+          "ending_group": "I",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 25,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 17
+            }
+          ],
+          "total_stop_min": 17,
+          "ending_group": "K",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 30,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 32
+            }
+          ],
+          "total_stop_min": 34,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 44
+            }
+          ],
+          "total_stop_min": 49,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 40,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 66
+            }
+          ],
+          "total_stop_min": 72,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 45,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 1
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 11
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 84
+            }
+          ],
+          "total_stop_min": 96,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 50,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 20
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 118
+            }
+          ],
+          "total_stop_min": 140,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 55,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 4
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 28
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 146
+            }
+          ],
+          "total_stop_min": 178,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 60,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 12
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 28
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 170
+            }
+          ],
+          "total_stop_min": 210,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "140": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 10,
+          "time_to_first_stop_min": 4.6667,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "E",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 15,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 5
+            }
+          ],
+          "total_stop_min": 5,
+          "ending_group": "H",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 20,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 13
+            }
+          ],
+          "total_stop_min": 13,
+          "ending_group": "J",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 25,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 3
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 24
+            }
+          ],
+          "total_stop_min": 27,
+          "ending_group": "L",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 30,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 37
+            }
+          ],
+          "total_stop_min": 44,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 58
+            }
+          ],
+          "total_stop_min": 67,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 40,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 4
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 82
+            }
+          ],
+          "total_stop_min": 93,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 45,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 18
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 114
+            }
+          ],
+          "total_stop_min": 137,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 50,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 8
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 27
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 145
+            }
+          ],
+          "total_stop_min": 180,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 55,
+          "time_to_first_stop_min": 3.0,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 1
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 15
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 29
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 171
+            }
+          ],
+          "total_stop_min": 216,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "150": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 8,
+          "time_to_first_stop_min": 5.0,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "E",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 10,
+          "time_to_first_stop_min": 4.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 2
+            }
+          ],
+          "total_stop_min": 2,
+          "ending_group": "F",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 15,
+          "time_to_first_stop_min": 4.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 8
+            }
+          ],
+          "total_stop_min": 8,
+          "ending_group": "H",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 20,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 15
+            }
+          ],
+          "total_stop_min": 17,
+          "ending_group": "K",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 25,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 29
+            }
+          ],
+          "total_stop_min": 36,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 30,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 4
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 45
+            }
+          ],
+          "total_stop_min": 56,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 74
+            }
+          ],
+          "total_stop_min": 87,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 40,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 14
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 106
+            }
+          ],
+          "total_stop_min": 128,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 45,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 3
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 8
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 24
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 142
+            }
+          ],
+          "total_stop_min": 177,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 50,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 4
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 14
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 28
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 170
+            }
+          ],
+          "total_stop_min": 216,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "160": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 7,
+          "time_to_first_stop_min": 5.3333,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "E",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 10,
+          "time_to_first_stop_min": 4.6667,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 4
+            }
+          ],
+          "total_stop_min": 4,
+          "ending_group": "F",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 15,
+          "time_to_first_stop_min": 4.3333,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 10
+            }
+          ],
+          "total_stop_min": 12,
+          "ending_group": "I",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 20,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 1
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 4
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 19
+            }
+          ],
+          "total_stop_min": 24,
+          "ending_group": "L",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 25,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 4
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 35
+            }
+          ],
+          "total_stop_min": 46,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 30,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 62
+            }
+          ],
+          "total_stop_min": 77,
+          "ending_group": "Z",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 4
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 8
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 89
+            }
+          ],
+          "total_stop_min": 107,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 40,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 21
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 134
+            }
+          ],
+          "total_stop_min": 167,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 45,
+          "time_to_first_stop_min": 3.3333,
+          "stops": [
+            {
+              "depth_fsw": 60,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 50,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 11
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 28
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 166
+            }
+          ],
+          "total_stop_min": 212,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "170": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 6,
+          "time_to_first_stop_min": 5.6667,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "D",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 10,
+          "time_to_first_stop_min": 5.0,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 6
+            }
+          ],
+          "total_stop_min": 6,
+          "ending_group": "G",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 15,
+          "time_to_first_stop_min": 4.6667,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 3
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 13
+            }
+          ],
+          "total_stop_min": 16,
+          "ending_group": "J",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 20,
+          "time_to_first_stop_min": 4.3333,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 3
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 24
+            }
+          ],
+          "total_stop_min": 33,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 25,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 1
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 41
+            }
+          ],
+          "total_stop_min": 56,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 30,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 77
+            }
+          ],
+          "total_stop_min": 96,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 60,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 50,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 15
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 120
+            }
+          ],
+          "total_stop_min": 149,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 40,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 60,
+              "minutes": 4
+            },
+            {
+              "depth_fsw": 50,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 9
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 25
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 158
+            }
+          ],
+          "total_stop_min": 202,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 45,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 60,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 50,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 16
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 28
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 197
+            }
+          ],
+          "total_stop_min": 253,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "180": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 6,
+          "time_to_first_stop_min": 6.0,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "E",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 10,
+          "time_to_first_stop_min": 5.3333,
+          "stops": [
+            {
+              "depth_fsw": 20,
+              "minutes": 8
+            }
+          ],
+          "total_stop_min": 8,
+          "ending_group": "G",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 15,
+          "time_to_first_stop_min": 4.6667,
+          "stops": [
+            {
+              "depth_fsw": 40,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 3
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 14
+            }
+          ],
+          "total_stop_min": 19,
+          "ending_group": "K",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 20,
+          "time_to_first_stop_min": 4.3333,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 1
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 29
+            }
+          ],
+          "total_stop_min": 42,
+          "ending_group": "M",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 25,
+          "time_to_first_stop_min": 4.3333,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 57
+            }
+          ],
+          "total_stop_min": 75,
+          "ending_group": "O",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 30,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 60,
+              "minutes": 3
+            },
+            {
+              "depth_fsw": 50,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 95
+            }
+          ],
+          "total_stop_min": 117,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 3.6667,
+          "stops": [
+            {
+              "depth_fsw": 70,
+              "minutes": 1
+            },
+            {
+              "depth_fsw": 60,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 50,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 22
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 144
+            }
+          ],
+          "total_stop_min": 184,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    },
+    "190": {
+      "bottom_times_min": [
+        {
+          "bottom_time_min": 5,
+          "time_to_first_stop_min": 6.3333,
+          "stops": [],
+          "total_stop_min": 0,
+          "ending_group": "D",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 10,
+          "time_to_first_stop_min": 5.3333,
+          "stops": [
+            {
+              "depth_fsw": 30,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 8
+            }
+          ],
+          "total_stop_min": 10,
+          "ending_group": "H",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 15,
+          "time_to_first_stop_min": 4.6667,
+          "stops": [
+            {
+              "depth_fsw": 50,
+              "minutes": 1
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 3
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 3
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 16
+            }
+          ],
+          "total_stop_min": 23,
+          "ending_group": "K",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 20,
+          "time_to_first_stop_min": 4.3333,
+          "stops": [
+            {
+              "depth_fsw": 60,
+              "minutes": 1
+            },
+            {
+              "depth_fsw": 50,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 34
+            }
+          ],
+          "total_stop_min": 50,
+          "ending_group": "N",
+          "exceptional_exposure": false
+        },
+        {
+          "bottom_time_min": 25,
+          "time_to_first_stop_min": 4.3333,
+          "stops": [
+            {
+              "depth_fsw": 60,
+              "minutes": 2
+            },
+            {
+              "depth_fsw": 50,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 72
+            }
+          ],
+          "total_stop_min": 94,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 30,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 70,
+              "minutes": 1
+            },
+            {
+              "depth_fsw": 60,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 50,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 7
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 13
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 122
+            }
+          ],
+          "total_stop_min": 154,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        },
+        {
+          "bottom_time_min": 35,
+          "time_to_first_stop_min": 4.0,
+          "stops": [
+            {
+              "depth_fsw": 70,
+              "minutes": 4
+            },
+            {
+              "depth_fsw": 60,
+              "minutes": 5
+            },
+            {
+              "depth_fsw": 50,
+              "minutes": 6
+            },
+            {
+              "depth_fsw": 40,
+              "minutes": 8
+            },
+            {
+              "depth_fsw": 30,
+              "minutes": 26
+            },
+            {
+              "depth_fsw": 20,
+              "minutes": 165
+            }
+          ],
+          "total_stop_min": 214,
+          "ending_group": "Z",
+          "exceptional_exposure": true
+        }
+      ]
+    }
+  }
+}

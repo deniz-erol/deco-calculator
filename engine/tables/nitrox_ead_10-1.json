@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "table": "10-1",
+    "title": "Equivalent Air Depth Table",
+    "source": "US Navy Diving Manual Rev 7 Change A (2018)",
+    "source_url": "https://www.divetable.info/workshop/USN_Rev7_Tables.pdf",
+    "cross_check_url": "https://www.uhms.org/images/MEDFAQs/February-2017/2nd/US_DIVING_MANUALREV7_TT2A.pdf",
+    "verified": false,
+    "coverage_notes": "Full standard USN air depth ladder (40-190 fsw in the tabulated increments) crossed with the full Navy-authorized nitrox O2 range (25%-40% O2, in 2% steps). Every cell is derived deterministically from the algebraic EAD formula EAD = (D + 33) * (FN2 / 0.79) - 33 (FN2 = 1 - FO2), then rounded UP to the nearest depth in this table's own depth ladder (this mirrors how the printed Table 10-1 rounds EAD to the next air-table depth). Cells where ppO2 = FO2 * (D/33 + 1) exceeds the 1.4 ata working ppO2 limit are omitted from the row (not present as a key): the Navy does not authorize normal nitrox use beyond 1.4 ata, so no EAD is tabulated there. Omitting (rather than storing null) preserves the existing engine.nitrox.lookup_ead() consumption contract, which falls back to the live algebraic formula for any depth/FO2 not present in a row -- that fallback path still carries the plan_nitrox_dive() ppO2 guard/warning for these over-ceiling combinations.",
+    "unverified_warning": "Nitrox EAD table derived from the US Navy EAD formula (2026-07-04); the derivation is exact, but cross-check the O2/depth grid against your Rev 7 manual before use.",
+    "fo2_range": [
+      0.25,
+      0.4
+    ]
+  },
+  "depths_fsw": [
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100,
+    110,
+    120,
+    130,
+    140,
+    150,
+    160,
+    170,
+    180,
+    190
+  ],
+  "fo2_columns": [
+    0.25,
+    0.28,
+    0.3,
+    0.32,
+    0.34,
+    0.36,
+    0.38,
+    0.4
+  ],
+  "rows": {
+    "40": {
+      "0.25": 40,
+      "0.28": 40,
+      "0.3": 40,
+      "0.32": 40,
+      "0.34": 40,
+      "0.36": 40,
+      "0.38": 40,
+      "0.4": 40
+    },
+    "50": {
+      "0.25": 50,
+      "0.28": 50,
+      "0.3": 50,
+      "0.32": 40,
+      "0.34": 40,
+      "0.36": 40,
+      "0.38": 40,
+      "0.4": 40
+    },
+    "60": {
+      "0.25": 60,
+      "0.28": 60,
+      "0.3": 50,
+      "0.32": 50,
+      "0.34": 50,
+      "0.36": 50,
+      "0.38": 40,
+      "0.4": 40
+    },
+    "70": {
+      "0.25": 70,
+      "0.28": 70,
+      "0.3": 60,
+      "0.32": 60,
+      "0.34": 60,
+      "0.36": 60,
+      "0.38": 50,
+      "0.4": 50
+    },
+    "80": {
+      "0.25": 80,
+      "0.28": 70,
+      "0.3": 70,
+      "0.32": 70,
+      "0.34": 70,
+      "0.36": 60,
+      "0.38": 60,
+      "0.4": 60
+    },
+    "90": {
+      "0.25": 90,
+      "0.28": 80,
+      "0.3": 80,
+      "0.32": 80,
+      "0.34": 70,
+      "0.36": 70
+    },
+    "100": {
+      "0.25": 100,
+      "0.28": 90,
+      "0.3": 90,
+      "0.32": 90,
+      "0.34": 80
+    },
+    "110": {
+      "0.25": 110,
+      "0.28": 100,
+      "0.3": 100,
+      "0.32": 100
+    },
+    "120": {
+      "0.25": 120,
+      "0.28": 110,
+      "0.3": 110
+    },
+    "130": {
+      "0.25": 130,
+      "0.28": 120
+    },
+    "140": {
+      "0.25": 140
+    },
+    "150": {
+      "0.25": 150
+    },
+    "160": {},
+    "170": {},
+    "180": {},
+    "190": {}
+  }
+}

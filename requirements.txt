@@ -1,0 +1,6 @@
+# Runtime dependencies for Streamlit Community Cloud.
+# Pinned to the versions in the project .venv (Python 3.12).
+# Dev/transcription-only tooling (pytest, pymupdf, pdfplumber) is intentionally excluded.
+streamlit==1.58.0
+altair==6.2.2
+pandas==3.0.3

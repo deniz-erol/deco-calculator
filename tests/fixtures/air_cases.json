@@ -1,0 +1,84 @@
+{
+  "note": "Golden cases transcribed from US Navy Diving Manual Rev 7 Change A (2018), Tables 9-7 (page 9-63) and 9-9 (pages 9-65..9-79), rendered from https://www.divetable.info/workshop/USN_Rev7_Tables.pdf and read cell-by-cell. These assert real Navy cell values, not placeholder mechanics. Rounding: depth up to next tabulated depth, bottom time up to next tabulated time. 9-9 total_stop_min is the SUM of the AIR stop-column minutes (not the manual's Total Ascent Time). See engine/tables/SOURCES.md for verification status.",
+  "no_deco_cases": [
+    {
+      "description": "60 fsw / 25 min: exact depth, time rounds up to 28 (E) within NDL 63",
+      "depth_fsw": 60,
+      "bottom_time_min": 25,
+      "expected_group": "E",
+      "expected_ndl_min": 63
+    },
+    {
+      "description": "Depth round-up (55 -> 60); 20 min rounds up to 22 (D column) within NDL 63... note 55 is tabulated so no round-up needed here (D at 55/25)",
+      "depth_fsw": 55,
+      "bottom_time_min": 20,
+      "expected_group": "D",
+      "expected_ndl_min": 74
+    },
+    {
+      "description": "100 fsw / 12 min rounds up to 15 (D column), NDL 25",
+      "depth_fsw": 100,
+      "bottom_time_min": 12,
+      "expected_group": "D",
+      "expected_ndl_min": 25
+    },
+    {
+      "description": "40 fsw / 30 min: exact D-column cell (max_time 36 -> D), NDL 163",
+      "depth_fsw": 40,
+      "bottom_time_min": 30,
+      "expected_group": "D",
+      "expected_ndl_min": 163
+    },
+    {
+      "description": "190 fsw / 4 min rounds up to 5 (D column), deepest air row, NDL 5",
+      "depth_fsw": 190,
+      "bottom_time_min": 4,
+      "expected_group": "D",
+      "expected_ndl_min": 5
+    }
+  ],
+  "deco_cases": [
+    {
+      "description": "60 fsw / 70 min exceeds 63-min NDL -> Table 9-9 (AIR: 7 min at 20 fsw, group L)",
+      "depth_fsw": 60,
+      "bottom_time_min": 70,
+      "expected_ending_group": "L",
+      "expected_total_stop_min": 7,
+      "expected_time_to_first_stop_min": 1.3333
+    },
+    {
+      "description": "100 fsw / 30 min exceeds 25-min NDL -> Table 9-9 (AIR: 3 min at 20 fsw, group J)",
+      "depth_fsw": 100,
+      "bottom_time_min": 30,
+      "expected_ending_group": "J",
+      "expected_total_stop_min": 3,
+      "expected_time_to_first_stop_min": 2.6667
+    },
+    {
+      "description": "150 fsw / 50 min -> exceptional-exposure schedule (AIR stops 50/40/30/20 fsw = 4/14/28/170 = 216 min, group Z)",
+      "depth_fsw": 150,
+      "bottom_time_min": 50,
+      "expected_ending_group": "Z",
+      "expected_total_stop_min": 216,
+      "expected_time_to_first_stop_min": 3.3333,
+      "expected_exceptional_exposure": true
+    },
+    {
+      "description": "170 fsw / 25 min -> Table 9-9 (AIR stops 50/40/30/20 fsw = 1/7/7/41 = 56 min, group O, non-exceptional)",
+      "depth_fsw": 170,
+      "bottom_time_min": 25,
+      "expected_ending_group": "O",
+      "expected_total_stop_min": 56,
+      "expected_time_to_first_stop_min": 4.0
+    },
+    {
+      "description": "190 fsw / 35 min -> exceptional-exposure schedule (AIR stops 70/60/50/40/30/20 fsw = 4/5/6/8/26/165 = 214 min, group Z)",
+      "depth_fsw": 190,
+      "bottom_time_min": 35,
+      "expected_ending_group": "Z",
+      "expected_total_stop_min": 214,
+      "expected_time_to_first_stop_min": 4.0,
+      "expected_exceptional_exposure": true
+    }
+  ]
+}

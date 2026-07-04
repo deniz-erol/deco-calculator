@@ -1,0 +1,102 @@
+- generic [ref=e2]:
+  - list [ref=e10]:
+    - listitem [ref=e11]:
+      - link "Home" [ref=e13] [cursor=pointer]:
+        - /url: http://localhost:8518/
+        - paragraph [ref=e16]: Home
+    - listitem [ref=e17]:
+      - link "Plan Dive" [ref=e19] [cursor=pointer]:
+        - /url: http://localhost:8518/Plan_Dive
+        - paragraph [ref=e22]: Plan Dive
+    - listitem [ref=e23]:
+      - link "Dive Series" [ref=e25] [cursor=pointer]:
+        - /url: http://localhost:8518/Dive_Series
+        - paragraph [ref=e28]: Dive Series
+    - listitem [ref=e29]:
+      - link "Profiles" [ref=e31] [cursor=pointer]:
+        - /url: http://localhost:8518/Profiles
+        - paragraph [ref=e34]: Profiles
+    - listitem [ref=e35]:
+      - link "About" [ref=e37] [cursor=pointer]:
+        - /url: http://localhost:8518/About
+        - paragraph [ref=e40]: About
+  - generic [ref=e3]:
+    - banner [ref=e44]:
+      - generic [ref=e47]:
+        - button "Deploy" [ref=e49] [cursor=pointer]:
+          - generic [ref=e51]: Deploy
+        - button "Main menu" [ref=e53] [cursor=pointer]:
+          - img [ref=e54]
+    - generic [ref=e57]:
+      - heading "US Navy Decompression Table Calculator" [level=1] [ref=e62]:
+        - text: US Navy Decompression Table Calculator
+        - generic [ref=e63]:
+          - link "Link to heading":
+            - /url: "#us-navy-decompression-table-calculator"
+            - img
+      - alert [ref=e66]:
+        - generic [ref=e68]:
+          - generic [ref=e71]: ⚠️
+          - paragraph [ref=e73]:
+            - strong [ref=e74]: Academic prototype for a thesis presentation.
+            - text: This tool reproduces US Navy Diving Manual (Rev 7) decompression
+            - emphasis [ref=e75]: tables
+            - text: for demonstration only. It is
+            - strong [ref=e76]: NOT
+            - text: a certified dive-planning tool and must
+            - strong [ref=e77]: never
+            - text: be used for operational dive planning. Decompression errors can cause serious injury or death — always plan real dives with certified software, current manuals, and qualified supervision.
+      - generic [ref=e81]:
+        - paragraph [ref=e82]:
+          - text: This tool reproduces
+          - strong [ref=e83]: US Navy Diving Manual (Rev 7)
+          - text: decompression
+          - emphasis [ref=e84]: tables
+          - text: "— no algorithm, no gas-switching engine, just faithful table lookups — for:"
+        - list [ref=e85]:
+          - listitem [ref=e86]:
+            - strong [ref=e87]: Air
+            - text: dives (no-decompression limits + decompression schedules)
+          - listitem [ref=e88]:
+            - strong [ref=e89]: Nitrox
+            - text: dives, via the Equivalent Air Depth (EAD) method
+          - listitem [ref=e90]:
+            - strong [ref=e91]: Heliox
+            - text: dives (surface-supplied mixed-gas schedules)
+          - listitem [ref=e92]:
+            - strong [ref=e93]: Repetitive (consecutive) dive series
+            - text: ", chained through the surface-interval / residual-nitrogen-time tables"
+          - listitem [ref=e94]:
+            - strong [ref=e95]: Saved profiles
+            - text: ", so a user can build and revisit dive series"
+        - paragraph [ref=e96]:
+          - text: It exists to make the
+          - emphasis [ref=e97]: tables themselves
+          - text: legible and testable — every number traces back to a specific table, page, and (eventually) a cell-by-cell verified transcription. See
+          - strong [ref=e98]: About
+          - text: for sources and method notes.
+      - heading "Get started" [level=3] [ref=e103]:
+        - text: Get started
+        - generic [ref=e104]:
+          - link "Link to heading":
+            - /url: "#get-started"
+            - img
+      - generic [ref=e106]:
+        - link "Plan a single dive" [ref=e112] [cursor=pointer]:
+          - /url: Plan_Dive
+          - generic [ref=e114]: 🧭
+          - paragraph [ref=e117]: Plan a single dive
+        - link "Build a dive series" [ref=e123] [cursor=pointer]:
+          - /url: Dive_Series
+          - generic [ref=e125]: 🔁
+          - paragraph [ref=e128]: Build a dive series
+        - link "Profiles" [ref=e134] [cursor=pointer]:
+          - /url: Profiles
+          - generic [ref=e136]: 👤
+          - paragraph [ref=e139]: Profiles
+        - link "About & sources" [ref=e145] [cursor=pointer]:
+          - /url: About
+          - generic [ref=e147]: 📖
+          - paragraph [ref=e150]: About & sources
+      - separator [ref=e155]
+      - paragraph [ref=e160]: Use the sidebar to navigate. The feet/meters display toggle and the safety disclaimer are available on every page.

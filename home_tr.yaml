@@ -1,0 +1,124 @@
+- generic [ref=e2]:
+  - generic [ref=e7]:
+    - button "keyboard_double_arrow_left" [ref=e203] [cursor=pointer]:
+      - generic [ref=e205]: keyboard_double_arrow_left
+    - list [ref=e10]:
+      - listitem [ref=e11]:
+        - link "Home" [ref=e13] [cursor=pointer]:
+          - /url: http://localhost:8765/
+          - paragraph [ref=e16]: Home
+      - listitem [ref=e17]:
+        - link "Plan Dive" [ref=e19] [cursor=pointer]:
+          - /url: http://localhost:8765/Plan_Dive
+          - paragraph [ref=e22]: Plan Dive
+      - listitem [ref=e23]:
+        - link "Dive Series" [ref=e25] [cursor=pointer]:
+          - /url: http://localhost:8765/Dive_Series
+          - paragraph [ref=e28]: Dive Series
+      - listitem [ref=e29]:
+        - link "Profiles" [ref=e31] [cursor=pointer]:
+          - /url: http://localhost:8765/Profiles
+          - paragraph [ref=e34]: Profiles
+      - listitem [ref=e35]:
+        - link "About" [ref=e37] [cursor=pointer]:
+          - /url: http://localhost:8765/About
+          - paragraph [ref=e40]: About
+    - generic [ref=e44]:
+      - generic [ref=e46]:
+        - paragraph [ref=e50]: Birimler
+        - radiogroup "Birimler" [ref=e206] [cursor=pointer]:
+          - generic [ref=e52]:
+            - radio "Fit (fsw)"
+            - paragraph [ref=e57]: Fit (fsw)
+          - generic [ref=e58]:
+            - radio "Metre"
+            - paragraph [ref=e63]: Metre
+      - generic [ref=e65]:
+        - paragraph [ref=e69]: Dil
+        - radiogroup "Dil" [ref=e207] [cursor=pointer]:
+          - generic [ref=e71]:
+            - radio "English"
+            - paragraph [ref=e76]: English
+          - generic [ref=e77]:
+            - radio "Türkçe" [checked] [active]
+            - paragraph [ref=e82]: Türkçe
+  - generic [ref=e3]:
+    - banner [ref=e85]:
+      - generic [ref=e88]:
+        - button "Deploy" [ref=e90] [cursor=pointer]:
+          - generic [ref=e92]: Deploy
+        - button "Main menu" [ref=e94] [cursor=pointer]:
+          - img [ref=e95]
+    - generic [ref=e98]:
+      - heading "US Navy Dekompresyon Tablosu Hesaplayıcı" [level=1] [ref=e208]:
+        - text: US Navy Dekompresyon Tablosu Hesaplayıcı
+        - generic [ref=e104]:
+          - link "Link to heading":
+            - /url: "#us-navy-decompression-table-calculator"
+            - img
+      - alert [ref=e107]:
+        - generic [ref=e109]:
+          - generic [ref=e112]: ⚠️
+          - paragraph [ref=e114]:
+            - strong [ref=e115]: Tez sunumu için akademik prototip.
+            - text: Bu araç, yalnızca gösterim amacıyla US Navy Diving Manual (Rev 7) dekompresyon
+            - emphasis [ref=e116]: tablolarını
+            - text: yeniden üretir. Sertifikalı bir dalış planlama aracı
+            - strong [ref=e117]: DEĞİLDİR
+            - text: ve operasyonel dalış planlamasında
+            - strong [ref=e118]: kesinlikle
+            - text: kullanılmamalıdır. Dekompresyon hataları ciddi yaralanmaya veya ölüme yol açabilir — gerçek dalışları her zaman sertifikalı yazılımlar, güncel kılavuzlar ve yetkili gözetim eşliğinde planlayın.
+      - generic [ref=e122]:
+        - paragraph [ref=e123]:
+          - text: Bu araç,
+          - strong [ref=e124]: US Navy Diving Manual (Rev 7)
+          - text: dekompresyon
+          - emphasis [ref=e125]: tablolarını
+          - text: "— algoritma yok, gaz geçiş motoru yok, sadece sadık tablo sorguları — şunlar için yeniden üretir:"
+        - list [ref=e126]:
+          - listitem [ref=e127]:
+            - strong [ref=e128]: Hava
+            - text: dalışları (dekompresyonsuz sınırlar + dekompresyon çizelgeleri)
+          - listitem [ref=e129]:
+            - strong [ref=e130]: Nitroks
+            - text: dalışları, Eşdeğer Hava Derinliği (EAD) yöntemiyle
+          - listitem [ref=e131]:
+            - strong [ref=e132]: Helioks
+            - text: dalışları (yüzeyden beslemeli karışık gaz çizelgeleri)
+          - listitem [ref=e133]:
+            - strong [ref=e134]: Tekrarlı (ardışık) dalış serileri
+            - text: ", yüzey aralığı / artık azot süresi tabloları üzerinden zincirlenir"
+          - listitem [ref=e135]:
+            - strong [ref=e136]: Kaydedilmiş profiller
+            - text: ", böylece bir kullanıcı dalış serileri oluşturup tekrar inceleyebilir"
+        - paragraph [ref=e137]:
+          - text: Amacı,
+          - emphasis [ref=e138]: tabloların kendisini
+          - text: okunabilir ve test edilebilir kılmaktır — her sayı belirli bir tabloya, sayfaya ve (nihayetinde) hücre hücre doğrulanmış bir transkripsiyona dayanır. Kaynaklar ve yöntem notları için
+          - strong [ref=e139]: Hakkında
+          - text: sayfasına bakın.
+      - heading "Başlarken" [level=3] [ref=e209]:
+        - text: Başlarken
+        - generic [ref=e145]:
+          - link "Link to heading":
+            - /url: "#get-started"
+            - img
+      - generic [ref=e147]:
+        - link "Tek dalış planla" [ref=e210] [cursor=pointer]:
+          - /url: Plan_Dive
+          - generic [ref=e155]: 🧭
+          - paragraph [ref=e158]: Tek dalış planla
+        - link "Dalış serisi oluştur" [ref=e211] [cursor=pointer]:
+          - /url: Dive_Series
+          - generic [ref=e166]: 🔁
+          - paragraph [ref=e169]: Dalış serisi oluştur
+        - link "Profiller" [ref=e212] [cursor=pointer]:
+          - /url: Profiles
+          - generic [ref=e177]: 👤
+          - paragraph [ref=e180]: Profiller
+        - link "Hakkında ve kaynaklar" [ref=e213] [cursor=pointer]:
+          - /url: About
+          - generic [ref=e188]: 📖
+          - paragraph [ref=e191]: Hakkında ve kaynaklar
+      - separator [ref=e196]
+      - paragraph [ref=e201]: Gezinmek için kenar çubuğunu kullanın. Fit/metre birim seçici ve güvenlik uyarısı her sayfada mevcuttur.
