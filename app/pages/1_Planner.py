@@ -553,7 +553,7 @@ if len(results) == 1:
         depth_converter=lambda fsw: depth_to_display(fsw, units),
     )
 
-    brush = alt.selection_interval(name="profile_brush", encodings=["x", "y"])
+    brush = alt.selection_interval(name="profile_brush", encodings=["x", "y"], zoom=False)
     interactive_chart = chart.add_params(brush)
 
     chart_state = st.altair_chart(
