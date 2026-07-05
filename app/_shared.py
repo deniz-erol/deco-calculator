@@ -354,6 +354,32 @@ def render_provenance_banner() -> None:
     st.info(t("provenance_banner"), icon="🗂️")
 
 
+def has_o2_deco(result: DiveResult) -> bool:
+    """True if any stop in this result breathes an oxygen gas phase.
+
+    Matches ``DecoStop.gas_phase`` values like ``"50% O2"`` / ``"100% O2"``
+    (case-insensitive substring match on "o2"); air/back-gas-only
+    schedules (``"back gas"``, ``"bottom mix"``) are excluded. Used to
+    gate the air-break advisory note — US Navy O2-breathing procedure
+    requires periodic air breaks during O2 decompression stops, which are
+    a procedural detail not represented in the stop-time table cells
+    themselves.
+    """
+    return any("o2" in stop.gas_phase.lower() for stop in result.stops)
+
+
+def render_air_break_note() -> None:
+    """Render the O2-decompression air-break advisory.
+
+    Call once per result whenever ``has_o2_deco(result)`` is True, right
+    next to that result's decompression schedule. Styled as
+    ``st.warning`` (matching ``render_result_warnings``' operational
+    warnings) rather than the quieter provenance ``st.info``, since this
+    is a real safety caveat about a procedure the table cells don't show.
+    """
+    st.warning(t("air_break_note"), icon="⚠️")
+
+
 def render_result_warnings(result: DiveResult) -> None:
     """Render a DiveResult's *operational* warnings only (deco required,
     NDL exceeded, ppO2 over ceiling, rounding, RNT edge cases, etc.), each

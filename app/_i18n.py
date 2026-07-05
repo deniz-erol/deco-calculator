@@ -255,6 +255,20 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "en": "Gas phases used in this schedule: **{phases}**",
         "tr": "Bu çizelgede kullanılan gaz aşamaları: **{phases}**",
     },
+    "air_break_note": {
+        "en": (
+            "This schedule uses oxygen decompression. US Navy procedure requires "
+            "air breaks while breathing O₂ (about 5 min on air per ~30 min on O₂). "
+            "These are NOT included in the stop times above — follow the manual's "
+            "O₂ breathing procedure."
+        ),
+        "tr": (
+            "Bu çizelge oksijen dekompresyonu kullanır. US Navy prosedürü, O₂ "
+            "solunurken hava molaları gerektirir (her ~30 dk O₂ için yaklaşık 5 dk "
+            "hava). Bunlar yukarıdaki durak sürelerine DAHİL DEĞİLDİR — kılavuzun "
+            "O₂ soluma prosedürünü uygulayın."
+        ),
+    },
     "decompression_schedule_header": {
         "en": "Decompression schedule",
         "tr": "Dekompresyon çizelgesi",

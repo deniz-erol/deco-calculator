@@ -41,7 +41,9 @@ from app._shared import (
     depth_to_fsw,
     format_depth_both,
     gas_label,
+    has_o2_deco,
     has_provenance_warning,
+    render_air_break_note,
     render_disclaimer,
     render_provenance_banner,
     render_result_warnings,
@@ -613,6 +615,9 @@ with right:
             if phases:
                 st.info(t("heliox_gas_phases_info", phases=", ".join(phases)))
 
+        if has_o2_deco(result):
+            render_air_break_note()
+
         st.subheader(t("decompression_schedule_header"))
         if result.stops:
             schedule_rows = [
@@ -695,6 +700,9 @@ with right:
                     else "—",
                 )
                 erow2b.metric(t("total_stop_time_label"), f"{result.total_stop_min:g}")
+
+                if has_o2_deco(result):
+                    render_air_break_note()
 
                 if result.stops:
                     schedule_rows = [
