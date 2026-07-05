@@ -193,9 +193,9 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     },
     "result_summary_header": {"en": "Result summary", "tr": "Sonuç özeti"},
     "status_label": {"en": "Status", "tr": "Durum"},
-    "status_no_deco": {"en": "No-decompression", "tr": "Dekompresyon gerektirmez"},
-    "status_deco_required": {"en": "Decompression required", "tr": "Dekompresyon gerekli"},
-    "status_deco": {"en": "Decompression", "tr": "Dekompresyon"},
+    "status_no_deco": {"en": "No deco", "tr": "Deko yok"},
+    "status_deco_required": {"en": "Deco required", "tr": "Deko gerekli"},
+    "status_deco": {"en": "Deco required", "tr": "Deko gerekli"},
     "ndl_label": {"en": "NDL (min)", "tr": "Dekompresyonsuz sınır (NDL) (dk)"},
     "time_to_first_stop_label": {
         "en": "Time to first stop (min)",
