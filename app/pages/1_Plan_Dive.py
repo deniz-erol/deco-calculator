@@ -10,6 +10,15 @@ chart stay in two-way sync.
 
 from __future__ import annotations
 
+import os as _os, sys as _sys
+_root = _os.path.dirname(_os.path.abspath(__file__))
+while _root != _os.path.dirname(_root) and not (
+    _os.path.isdir(_os.path.join(_root, "app")) and _os.path.isdir(_os.path.join(_root, "engine"))
+):
+    _root = _os.path.dirname(_root)
+if _root not in _sys.path:
+    _sys.path.insert(0, _root)
+
 import altair as alt
 import streamlit as st
 
