@@ -8,6 +8,15 @@ data, per spec §7.
 This module is the only place in the ``app`` layer that touches the
 filesystem for profile data; it depends on ``engine.types`` for the
 dive shape but never the other way around.
+
+**Not used by the current UI.** On the shared public Streamlit Cloud
+deployment, server-side disk is visible to every visitor, so saved
+profiles are no longer routed through here — see ``app._local_store``,
+which persists profiles in each visitor's own browser localStorage
+instead. This module is kept (unused) rather than deleted so its
+existing tests/behaviour stay available if a future deployment target
+(private server, single-user desktop app, etc.) wants server-side
+storage again.
 """
 
 from __future__ import annotations

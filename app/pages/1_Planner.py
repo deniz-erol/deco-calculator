@@ -30,8 +30,6 @@ while _root != _os.path.dirname(_root) and not (
 if _root not in _sys.path:
     _sys.path.insert(0, _root)
 
-from dataclasses import replace as dc_replace
-
 import altair as alt
 import streamlit as st
 
@@ -49,7 +47,7 @@ from app._shared import (
     render_result_warnings,
     render_sidebar_toggles,
 )
-from app.store import DiveSeries, JsonProfileStore, ProfileStoreError, UserProfile, UserProfileData
+from app._local_store import LocalStoreError, list_profiles, save_profile
 from engine.lookup import TableRangeError, load_table
 from engine.planner import plan_series
 from engine.types import Dive, GasMix
@@ -725,55 +723,45 @@ with right:
 st.divider()
 
 # ---------------------------------------------------------------------------
-# Save the current dives (committed + active) to a profile.
+# Save the current dives (committed + active) to a profile in THIS
+# browser's localStorage — private per-device, never sent to the server.
 # ---------------------------------------------------------------------------
 st.subheader(t("save_series_header"))
 
-store = JsonProfileStore()
-existing_users = store.list_users()
+existing_profile_names = list_profiles()
 
-# Stable internal sentinel for "create a new user"; only the on-screen
-# label is translated (format_func), so the `user_choice ==
-# NEW_USER_SENTINEL` checks below keep working regardless of the active
-# language.
-NEW_USER_SENTINEL = "__new_user__"
-
-save_col1, save_col2, save_col3 = st.columns([1, 1, 1])
+save_col1, save_col2 = st.columns([1, 1])
 with save_col1:
-    user_choice = st.selectbox(
-        t("user_label"),
-        options=[NEW_USER_SENTINEL] + existing_users,
-        format_func=lambda u: t("new_user_option") if u == NEW_USER_SENTINEL else u,
-    )
+    profile_name = st.text_input(t("profile_name_label"), help=t("profile_name_help"))
 with save_col2:
-    new_user_id = ""
-    new_user_name = ""
-    if user_choice == NEW_USER_SENTINEL:
-        new_user_id = st.text_input(t("new_user_id_label"))
-        new_user_name = st.text_input(t("new_user_display_name_label"))
-with save_col3:
     series_label = st.text_input(t("series_label_label"), value=t("series_label_default"))
 
-if st.button(t("save_series_button"), type="primary"):
-    user_id = new_user_id.strip() if user_choice == NEW_USER_SENTINEL else user_choice
-    user_name = new_user_name.strip() if user_choice == NEW_USER_SENTINEL else user_choice
+if existing_profile_names:
+    st.caption(t("existing_profiles_caption", names=", ".join(existing_profile_names)))
 
-    if not user_id:
-        st.error(t("user_id_required_error"))
+if st.button(t("save_series_button"), type="primary"):
+    if not profile_name or not profile_name.strip():
+        st.error(t("profile_name_required_error"))
     else:
         try:
-            if store.exists(user_id):
-                data = store.load(user_id)
-            else:
-                data = UserProfileData(user=UserProfile(id=user_id, name=user_name or user_id))
-
-            new_series = DiveSeries(
-                id=f"series-{len(data.series) + 1}",
-                label=series_label or t("series_label_default"),
-                dives=tuple(dives),
+            dive_dicts = [
+                {
+                    "gas_kind": (
+                        "heliox" if dive.gas.fhe > 0 else ("nitrox" if dive.gas.fo2 != 0.21 else "air")
+                    ),
+                    "fo2": dive.gas.fo2,
+                    "fhe": dive.gas.fhe,
+                    "depth_fsw": dive.max_depth_fsw,
+                    "bottom_time_min": dive.bottom_time_min,
+                    "surface_interval_before_min": dive.surface_interval_before_min,
+                }
+                for dive in dives
+            ]
+            save_profile(
+                profile_name.strip(),
+                series_label or t("series_label_default"),
+                dive_dicts,
             )
-            updated = dc_replace(data, series=data.series + (new_series,))
-            store.save(updated)
-            st.success(t("series_saved_success", label=series_label, user_id=user_id))
-        except ProfileStoreError as exc:
+            st.success(t("series_saved_success", label=series_label, profile_name=profile_name.strip()))
+        except LocalStoreError as exc:
             st.error(t("profile_save_error", error=exc))

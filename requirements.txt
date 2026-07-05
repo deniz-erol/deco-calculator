@@ -4,3 +4,7 @@
 streamlit==1.58.0
 altair==6.2.2
 pandas==3.0.3
+# Pure-Python component (py3-none-any wheel, Requires-Python >=3.7) backing
+# app/_local_store.py: browser-localStorage profile persistence so saved
+# dive profiles are private per visitor instead of shared server-side disk.
+streamlit-local-storage==0.0.25

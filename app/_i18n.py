@@ -345,21 +345,29 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "en": "Dive #{index} — {gas} @ {depth}, {minutes:g} min bottom time",
         "tr": "Dalış #{index} — {gas} @ {depth}, {minutes:g} dk dip süresi",
     },
-    "save_series_header": {"en": "Save this series to a profile", "tr": "Bu seriyi bir profile kaydet"},
-    "user_label": {"en": "User", "tr": "Kullanıcı"},
-    "new_user_option": {"en": "<new user>", "tr": "<yeni kullanıcı>"},
-    "new_user_id_label": {"en": "New user id (no slashes)", "tr": "Yeni kullanıcı kimliği (eğik çizgisiz)"},
-    "new_user_display_name_label": {"en": "New user display name", "tr": "Yeni kullanıcı görünen adı"},
+    "save_series_header": {
+        "en": "Save this series (private to this browser)",
+        "tr": "Bu seriyi kaydet (yalnızca bu tarayıcıda)",
+    },
+    "profile_name_label": {"en": "Profile name", "tr": "Profil adı"},
+    "profile_name_help": {
+        "en": "Saved only in this browser's local storage — not visible to anyone else.",
+        "tr": "Yalnızca bu tarayıcının yerel deposunda kaydedilir — başkaları göremez.",
+    },
+    "existing_profiles_caption": {
+        "en": "Already saved in this browser: {names}",
+        "tr": "Bu tarayıcıda zaten kayıtlı: {names}",
+    },
     "series_label_label": {"en": "Series label", "tr": "Seri etiketi"},
     "series_label_default": {"en": "Series", "tr": "Seri"},
-    "save_series_button": {"en": "Save series to profile", "tr": "Seriyi profile kaydet"},
-    "user_id_required_error": {
-        "en": "A user id is required to save a profile.",
-        "tr": "Profil kaydetmek için bir kullanıcı kimliği gereklidir.",
+    "save_series_button": {"en": "Save series", "tr": "Seriyi kaydet"},
+    "profile_name_required_error": {
+        "en": "A profile name is required to save.",
+        "tr": "Kaydetmek için bir profil adı gereklidir.",
     },
     "series_saved_success": {
-        "en": "Saved '{label}' to profile '{user_id}'.",
-        "tr": "'{label}' profil '{user_id}' içine kaydedildi.",
+        "en": "Saved '{label}' to profile '{profile_name}' in this browser.",
+        "tr": "'{label}' bu tarayıcıdaki '{profile_name}' profiline kaydedildi.",
     },
     "profile_save_error": {
         "en": "Could not save profile: {error}",
@@ -367,37 +375,31 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     },
     # --- Profiles page ---
     "profiles_page_title": {"en": "Profiles", "tr": "Profiller"},
-    "choose_user_header": {"en": "Choose a user", "tr": "Bir kullanıcı seçin"},
-    "mode_label": {"en": "Mode", "tr": "Mod"},
-    "mode_existing_user": {"en": "Existing user", "tr": "Mevcut kullanıcı"},
-    "mode_create_new_user": {"en": "Create new user", "tr": "Yeni kullanıcı oluştur"},
+    "saved_profiles_header": {"en": "Saved profiles", "tr": "Kayıtlı profiller"},
+    "profiles_privacy_caption": {
+        "en": "These profiles are stored only in this browser's local storage. "
+        "They are private to this device/browser and are never sent to or "
+        "shared with any other visitor.",
+        "tr": "Bu profiller yalnızca bu tarayıcının yerel deposunda saklanır. "
+        "Bu cihaza/tarayıcıya özeldir ve başka hiçbir ziyaretçiyle "
+        "paylaşılmaz veya sunucuya gönderilmez.",
+    },
     "no_profiles_info": {
-        "en": "No profiles saved yet. Create one, or save a plan from the Planner.",
-        "tr": "Henüz kaydedilmiş profil yok. Bir profil oluşturun veya Planlayıcı'dan bir plan kaydedin.",
-    },
-    "display_name_label": {"en": "Display name", "tr": "Görünen ad"},
-    "create_profile_button": {"en": "Create profile", "tr": "Profil oluştur"},
-    "user_id_required_error2": {"en": "A user id is required.", "tr": "Bir kullanıcı kimliği gereklidir."},
-    "profile_already_exists_warning": {
-        "en": "A profile for '{user_id}' already exists.",
-        "tr": "'{user_id}' için bir profil zaten mevcut.",
-    },
-    "profile_created_success": {
-        "en": "Created profile '{user_id}'.",
-        "tr": "'{user_id}' profili oluşturuldu.",
-    },
-    "profile_create_error": {
-        "en": "Could not create profile: {error}",
-        "tr": "Profil oluşturulamadı: {error}",
+        "en": "No profiles saved yet in this browser. Save a plan from the Planner page.",
+        "tr": "Bu tarayıcıda henüz kaydedilmiş profil yok. Planlayıcı sayfasından bir plan kaydedin.",
     },
     "profile_load_error": {
-        "en": "Could not load profile '{user_id}': {error}",
-        "tr": "'{user_id}' profili yüklenemedi: {error}",
+        "en": "Could not load profile '{profile_name}': {error}",
+        "tr": "'{profile_name}' profili yüklenemedi: {error}",
     },
-    "saved_series_header": {"en": "{name}'s saved series", "tr": "{name} adlı kullanıcının kayıtlı serileri"},
-    "no_series_saved_info": {
-        "en": "No series saved for this user yet. Build one on the Planner page.",
-        "tr": "Bu kullanıcı için henüz kayıtlı seri yok. Planlayıcı sayfasında bir tane oluşturun.",
+    "delete_profile_button": {"en": "Delete", "tr": "Sil"},
+    "profile_deleted_success": {
+        "en": "Deleted profile '{profile_name}'.",
+        "tr": "'{profile_name}' profili silindi.",
+    },
+    "profile_delete_error": {
+        "en": "Could not delete profile: {error}",
+        "tr": "Profil silinemedi: {error}",
     },
     "series_expander_title": {
         "en": "{label} ({count} dive(s))",
