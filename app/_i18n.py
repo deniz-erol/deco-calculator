@@ -202,11 +202,17 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     "bottom_time_help": {
         "en": (
             "US Navy bottom time: from leaving the surface until beginning "
-            "the ascent — includes the descent."
+            "the ascent — includes the descent. The table counts this "
+            "entire time as if it were spent at maximum depth (a "
+            "conservative, square-profile assumption); actual time spent "
+            "at depth is not credited separately."
         ),
         "tr": (
             "US Navy dip süresi: yüzeyden ayrılıştan çıkışa başlanana kadar "
-            "— inişi de içerir."
+            "— inişi de içerir. Tablo, bu sürenin tamamını maksimum "
+            "derinlikte geçirilmiş gibi hesaplar (güvenli taraf, "
+            "kare-profil varsayımı); derinlikte gerçekte kalınan süre "
+            "ayrıca kredilendirilmez."
         ),
     },
     "invalid_dive_params_error": {
