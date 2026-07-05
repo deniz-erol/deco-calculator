@@ -29,7 +29,9 @@ from app._shared import (
     depth_to_display,
     depth_to_fsw,
     format_depth,
+    has_provenance_warning,
     render_disclaimer,
+    render_provenance_banner,
     render_result_warnings,
     render_sidebar_toggles,
 )
@@ -259,6 +261,8 @@ except (ValueError, TableRangeError) as exc:
 # ---------------------------------------------------------------------------
 # Results.
 # ---------------------------------------------------------------------------
+if has_provenance_warning(result):
+    render_provenance_banner()
 render_result_warnings(result)
 
 st.subheader(t("result_summary_header"))

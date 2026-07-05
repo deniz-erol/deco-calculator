@@ -26,7 +26,9 @@ from app._shared import (
     depth_to_fsw,
     format_depth,
     gas_label,
+    has_provenance_warning,
     render_disclaimer,
+    render_provenance_banner,
     render_result_warnings,
     render_sidebar_toggles,
 )
@@ -166,6 +168,13 @@ if st.session_state[SERIES_KEY]:
     except (ValueError, TableRangeError) as exc:
         st.error(t("plan_series_engine_error", error=exc))
         results = []
+
+    # A single, translated provenance disclaimer for the whole series —
+    # rendered once here (not once per dive) even though every dive in a
+    # repetitive chain typically touches multiple seeded tables (9-7,
+    # 9-8, 9-9) that would otherwise each carry their own warning.
+    if any(has_provenance_warning(result) for result in results):
+        render_provenance_banner()
 
     for i, (entry, result) in enumerate(zip(st.session_state[SERIES_KEY], results)):
         with st.expander(

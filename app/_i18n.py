@@ -12,7 +12,7 @@ import streamlit as st
 
 LANG_KEY = "lang"
 LANGUAGES = {"en": "English", "tr": "Türkçe"}
-DEFAULT_LANG = "en"
+DEFAULT_LANG = "tr"
 
 # key -> {"en": "...", "tr": "..."}
 TRANSLATIONS: dict[str, dict[str, str]] = {

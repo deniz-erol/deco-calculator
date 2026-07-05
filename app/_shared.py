@@ -13,7 +13,7 @@ import re
 
 import streamlit as st
 
-from app._i18n import render_language_toggle, t
+from app._i18n import DEFAULT_LANG, render_language_toggle, t
 from engine.types import DiveResult
 from engine.units import fsw_to_m, m_to_fsw
 
@@ -114,27 +114,55 @@ def format_depth(depth_fsw: float | None, units: str) -> str:
     return f"{value:g} {suffix}"
 
 
-UNVERIFIED_WARNING_MARKER = "not yet verified against the manual"
+# Every seeded table's `meta.unverified_warning` (see engine/tables/*.json)
+# carries its own custom wording (transcription vs. formula-derivation,
+# different phrasing per table), so detection can't key on one exact
+# marker string — it must recognize any of the known provenance phrasings
+# plus the engine's generic fallback (``TableMeta.warnings()`` in
+# engine/lookup.py). Each substring below is chosen to be unique to
+# provenance text and NOT appear in any operational warning template in
+# this module (in particular, plain "manual" is avoided: the operational
+# ``warn_rnt_undeterminable`` warning also mentions "against the manual").
+UNVERIFIED_WARNING_MARKERS: tuple[str, ...] = (
+    "not yet verified against the manual",  # engine/lookup.py generic fallback
+    "Transcribed from",  # air 9-7/9-8/9-9, heliox 12-4
+    "derived from the US Navy EAD formula",  # nitrox 10-1
+)
+
+
+def _is_provenance_warning(warning: str) -> bool:
+    return any(marker in warning for marker in UNVERIFIED_WARNING_MARKERS)
 
 
 def split_warnings(result: DiveResult) -> tuple[list[str], list[str]]:
     """Split a DiveResult's warnings into (data-provenance, operational).
 
-    The "table data not yet verified against the manual" warning appears
-    on every result (no seeded table is marked verified yet) and deserves
-    its own persistent, unmissable callout, separate from operational
-    warnings (MOD exceeded, rounding, exceptional exposure, non-repetitive,
-    heliox-has-no-rep-group, etc.). Split happens on the raw English
-    engine strings — translation happens afterwards, at render time.
+    Every seeded table's data-provenance warning (no table is marked
+    verified yet — see engine/tables/*.json ``meta.unverified_warning``)
+    is collapsed into a single, translated, unmissable disclaimer,
+    separate from operational warnings (MOD exceeded, rounding,
+    exceptional exposure, non-repetitive, heliox-has-no-rep-group, etc).
+    Split happens on the raw English engine strings — translation happens
+    afterwards, at render time.
     """
     provenance: list[str] = []
     operational: list[str] = []
     for w in result.warnings:
-        if UNVERIFIED_WARNING_MARKER in w:
+        if _is_provenance_warning(w):
             provenance.append(w)
         else:
             operational.append(w)
     return provenance, operational
+
+
+def has_provenance_warning(result: DiveResult) -> bool:
+    """True if any of this result's warnings is a data-provenance warning.
+
+    Used to gate a single, page-level provenance banner across multiple
+    results (e.g. every dive in a Dive Series chain) instead of repeating
+    it once per dive.
+    """
+    return any(_is_provenance_warning(w) for w in result.warnings)
 
 
 # ---------------------------------------------------------------------------
@@ -250,7 +278,7 @@ def _translate_warning(warning: str) -> str:
     that doesn't match a known static message or regex template — this
     function must never raise.
     """
-    if st.session_state.get("lang", "en") != "tr":
+    if st.session_state.get("lang", DEFAULT_LANG) != "tr":
         return warning
 
     static_key = _STATIC_WARNING_KEYS.get(warning)
@@ -266,19 +294,42 @@ def _translate_warning(warning: str) -> str:
     return warning
 
 
-def render_result_warnings(result: DiveResult) -> None:
-    """Render a DiveResult's warnings as callouts: data-provenance banner
-    first (always shown, since no table is verified yet), then any
-    operational warnings as a second callout. Warnings are best-effort
-    translated to Turkish via ``_translate_warning`` when the active
-    language is "tr"; unmatched templates fall back to English.
+def render_provenance_banner() -> None:
+    """Render the single, translated data-provenance disclaimer.
+
+    Deliberately quieter than the operational warnings below (``st.info``
+    instead of ``st.warning``/``st.error``) so the important, per-dive
+    operational callouts (deco required, NDL exceeded, ppO2 over ceiling,
+    etc.) visually stand out instead of being buried under provenance
+    notices. Callers are responsible for calling this at most once per
+    page/result — see ``has_provenance_warning`` for aggregating across
+    multiple results (e.g. a Dive Series chain) before deciding whether
+    to render it.
     """
-    provenance, operational = split_warnings(result)
-    if provenance:
-        st.error(t("provenance_banner"), icon="🚧")
-    if operational:
-        for w in operational:
-            st.warning(_translate_warning(w), icon="⚠️")
+    st.info(t("provenance_banner"), icon="🗂️")
+
+
+def render_result_warnings(result: DiveResult) -> None:
+    """Render a DiveResult's *operational* warnings only (deco required,
+    NDL exceeded, ppO2 over ceiling, rounding, RNT edge cases, etc.), each
+    as its own ``st.warning`` callout. Warnings are best-effort translated
+    to Turkish via ``_translate_warning`` when the active language is
+    "tr"; unmatched templates fall back to English.
+
+    Data-provenance warnings are intentionally excluded here — render
+    ``render_provenance_banner()`` once per page/result instead, so the
+    same "table data not verified" disclaimer is never duplicated when a
+    dive touches more than one seeded table (e.g. a repetitive dive that
+    consults the 9-7 NDL table, the 9-8 repetitive table, and the 9-9
+    deco table all at once).
+    """
+    _, operational = split_warnings(result)
+    seen: dict[str, None] = {}
+    for w in operational:
+        translated = _translate_warning(w)
+        seen.setdefault(translated, None)
+    for translated in seen:
+        st.warning(translated, icon="⚠️")
 
 
 def gas_label(gas_kind: str) -> str:
