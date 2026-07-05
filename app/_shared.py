@@ -105,13 +105,22 @@ def depth_label(units: str) -> str:
     return t("depth_label_m") if units == METERS else t("depth_label_ft")
 
 
-def format_depth(depth_fsw: float | None, units: str) -> str:
-    """Human-readable depth string with the current unit suffix."""
+def format_depth_both(depth_fsw: float | None) -> str:
+    """Human-readable depth string always showing both units at once,
+    e.g. ``"20 fsw (6.1 m)"``.
+
+    Depth is stored canonically in fsw everywhere in the engine; this is
+    the single formatter every display site should call so fsw and
+    meters never drift apart or require a second conversion constant.
+    Meters reuse ``engine.units.fsw_to_m`` (the same geometric factor the
+    units toggle and the slider already use) — never a hardcoded 0.3048.
+    fsw is shown as the table's rounded integer; meters to one decimal.
+    "fsw" and "m" are universal abbreviations and are not translated.
+    """
     if depth_fsw is None:
         return "—"
-    value = depth_to_display(depth_fsw, units)
-    suffix = "m" if units == METERS else "fsw"
-    return f"{value:g} {suffix}"
+    meters = fsw_to_m(depth_fsw)
+    return f"{round(depth_fsw):g} fsw ({meters:.1f} m)"
 
 
 # Every seeded table's `meta.unverified_warning` (see engine/tables/*.json)
@@ -271,6 +280,24 @@ _WARNING_PATTERNS: tuple[tuple[re.Pattern, str, tuple[str, ...]], ...] = (
 )
 
 
+# Templates whose captured "depth" field is the ONLY fsw value in the
+# sentence (every other captured number is a different unit — ata, %,
+# minutes — or there is no other fsw field at all). Only these are safe
+# to also show in meters: appending "(X m)" to a template that captures
+# *two* fsw values (warn_depth_rounded's from/to, warn_mod_exceeded's
+# depth/mod) would be ambiguous about which one the meters belong to, so
+# those are deliberately left fsw-only here (best-effort, not attempted).
+_SINGLE_DEPTH_WARNING_KEYS = frozenset(
+    {
+        "warn_bottom_time_exceeds_ndl",
+        "warn_ppo2_exceeds",
+        "warn_ead_fallback",
+        "warn_heliox_o2_window",
+        "warn_rnt_undeterminable",
+    }
+)
+
+
 def _translate_warning(warning: str) -> str:
     """Best-effort Turkish translation of one engine warning string.
 
@@ -289,6 +316,11 @@ def _translate_warning(warning: str) -> str:
         match = pattern.fullmatch(warning)
         if match:
             values = dict(zip(field_names, match.groups()))
+            if "depth" in values and key in _SINGLE_DEPTH_WARNING_KEYS:
+                try:
+                    values["depth_m"] = f"{fsw_to_m(float(values['depth'])):.1f}"
+                except (TypeError, ValueError):
+                    pass
             return t(key, **values)
 
     return warning

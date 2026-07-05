@@ -28,7 +28,7 @@ from app._shared import (
     depth_label,
     depth_to_display,
     depth_to_fsw,
-    format_depth,
+    format_depth_both,
     has_provenance_warning,
     render_disclaimer,
     render_provenance_banner,
@@ -38,6 +38,7 @@ from app._shared import (
 from engine.lookup import TableRangeError, load_table
 from engine.planner import plan_dive
 from engine.types import Dive, GasMix
+from engine.units import fsw_to_m
 
 st.set_page_config(page_title="Plan Dive", page_icon="🧭", layout="wide")
 
@@ -223,6 +224,13 @@ with col_depth:
             key=DEPTH_KEY,
         )
         depth_fsw = depth_to_fsw(display_depth, units)
+        # Live equivalent-unit caption: the slider's own unit is still
+        # governed by the units toggle, but the other unit is always
+        # shown alongside it so both are visible while dragging.
+        if units == "ft":
+            st.caption(f"≈ {fsw_to_m(depth_fsw):.1f} m")
+        else:
+            st.caption(f"≈ {round(depth_fsw):g} fsw")
 
 with col_time:
     st.session_state[TIME_KEY] = _clamp(st.session_state[TIME_KEY], 1.0, MAX_TIME_MIN)
@@ -292,8 +300,8 @@ if gas_kind == "nitrox":
     st.info(
         t(
             "nitrox_ead_info",
-            actual_depth=format_depth(result.actual_depth_fsw, units),
-            ead_depth=format_depth(result.ead_fsw, units),
+            actual_depth=format_depth_both(result.actual_depth_fsw),
+            ead_depth=format_depth_both(result.ead_fsw),
         )
     )
 elif gas_kind == "heliox":
@@ -305,7 +313,7 @@ st.subheader(t("decompression_schedule_header"))
 if result.stops:
     schedule_rows = [
         {
-            t("col_stop_depth"): format_depth(stop.depth_fsw, units),
+            t("col_stop_depth"): format_depth_both(stop.depth_fsw),
             t("col_minutes"): stop.minutes,
             t("col_gas_phase"): stop.gas_phase,
         }
@@ -320,6 +328,7 @@ depth_draggable = gas_kind != "heliox"
 drag_hint_key = "drag_hint_with_depth" if depth_draggable else "drag_hint_no_depth"
 st.caption(t(drag_hint_key))
 st.caption(t("chart_drag_tip"))
+st.caption(t("chart_units_caption", axis_unit=depth_label(units)))
 chart = build_profile_chart(
     max_depth_fsw=result.actual_depth_fsw or depth_fsw,
     bottom_time_min=bottom_time_min,

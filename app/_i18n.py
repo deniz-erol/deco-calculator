@@ -269,6 +269,10 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "en": "Square-profile assumption per the US Navy tables — not a recorded dive trace",
         "tr": "US Navy tablolarına göre kare-profil varsayımı — kaydedilmiş bir dalış izi değildir",
     },
+    "chart_units_caption": {
+        "en": "Depth axis: {axis_unit} — hover a point for the fsw/m equivalent.",
+        "tr": "Derinlik ekseni: {axis_unit} — fsw/m karşılığı için bir noktanın üzerine gelin.",
+    },
     # --- Dive Series page ---
     "dive_series_page_title": {
         "en": "Dive Series (Repetitive Dives)",
@@ -566,8 +570,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
             "{depth} fsw; decompression required (Table 9-9)"
         ),
         "tr": (
-            "Dip süresi {bottom_time} dk, {depth} fsw'deki {ndl} dk'lık NDL'yi "
-            "aşıyor; dekompresyon gerekli (Tablo 9-9)"
+            "Dip süresi {bottom_time} dk, {depth} fsw ({depth_m} m) derinlikteki "
+            "{ndl} dk'lık NDL'yi aşıyor; dekompresyon gerekli (Tablo 9-9)"
         ),
     },
     "warn_ppo2_exceeds": {
@@ -577,9 +581,10 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
             "and surface-supplied gear; repetitive dives are NOT authorized."
         ),
         "tr": (
-            "{depth} fsw'deki ppO2 değeri {ppo2} ata olup, {ceiling} ata'lık "
-            "çalışma sınırını aşıyor — CO (Dalış Subayı) yetkisi ve yüzeyden "
-            "beslemeli ekipman gerektirir; tekrarlı dalışlara İZİN VERİLMEZ."
+            "{depth} fsw ({depth_m} m) derinlikteki ppO2 değeri {ppo2} ata olup, "
+            "{ceiling} ata'lık çalışma sınırını aşıyor — CO (Dalış Subayı) "
+            "yetkisi ve yüzeyden beslemeli ekipman gerektirir; tekrarlı "
+            "dalışlara İZİN VERİLMEZ."
         ),
     },
     "warn_mod_exceeded": {
@@ -598,8 +603,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
             "10-1 subset; computed via the algebraic EAD formula instead"
         ),
         "tr": (
-            "{depth} fsw / FO2={fo2} için EAD, mevcut Tablo 10-1 alt "
-            "kümesinde yok; bunun yerine cebirsel EAD formülüyle hesaplandı"
+            "{depth} fsw ({depth_m} m) / FO2={fo2} için EAD, mevcut Tablo 10-1 "
+            "alt kümesinde yok; bunun yerine cebirsel EAD formülüyle hesaplandı"
         ),
     },
     "warn_heliox_o2_window": {
@@ -608,8 +613,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
             "{depth} fsw (Max {max_o2}% / Min {min_o2}%)"
         ),
         "tr": (
-            "İstenen FO2={fo2}, {depth} fsw için Tablo 12-4 penceresinin dışında "
-            "(Maks %{max_o2} / Min %{min_o2})"
+            "İstenen FO2={fo2}, {depth} fsw ({depth_m} m) için Tablo 12-4 "
+            "penceresinin dışında (Maks %{max_o2} / Min %{min_o2})"
         ),
     },
     "warn_table_unverified": {
@@ -648,10 +653,10 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
             "value fabricated."
         ),
         "tr": (
-            "{group} grubu için {depth} fsw'de RNT belirlenemiyor (kılavuz "
-            "madde 9-9.1 alt madde 8, yerine derinlik kuralı) — uygulamadan "
-            "önce tam prosedürü kılavuzla doğrulayın; hiçbir RNT değeri "
-            "uydurulmadı."
+            "{group} grubu için {depth} fsw ({depth_m} m) derinlikte RNT "
+            "belirlenemiyor (kılavuz madde 9-9.1 alt madde 8, yerine derinlik "
+            "kuralı) — uygulamadan önce tam prosedürü kılavuzla doğrulayın; "
+            "hiçbir RNT değeri uydurulmadı."
         ),
     },
 }

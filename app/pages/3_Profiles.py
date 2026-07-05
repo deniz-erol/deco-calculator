@@ -16,7 +16,7 @@ if _root not in _sys.path:
 import streamlit as st
 
 from app._i18n import t
-from app._shared import format_depth, gas_label, render_disclaimer, render_sidebar_toggles
+from app._shared import format_depth_both, gas_label, render_disclaimer, render_sidebar_toggles
 from app.store import JsonProfileStore, ProfileStoreError, UserProfile, UserProfileData
 
 st.set_page_config(page_title="Profiles", page_icon="👤", layout="wide")
@@ -96,7 +96,7 @@ if selected_user_id:
                                 "dive_summary_line",
                                 index=i + 1,
                                 gas=gas_label(dive.gas.kind),
-                                depth=format_depth(dive.max_depth_fsw, units),
+                                depth=format_depth_both(dive.max_depth_fsw),
                                 minutes=dive.bottom_time_min,
                             )
                             + (

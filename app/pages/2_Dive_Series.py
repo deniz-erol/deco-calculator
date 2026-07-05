@@ -24,7 +24,7 @@ from app._shared import (
     depth_label,
     depth_to_display,
     depth_to_fsw,
-    format_depth,
+    format_depth_both,
     gas_label,
     has_provenance_warning,
     render_disclaimer,
@@ -128,7 +128,7 @@ if st.session_state[SERIES_KEY]:
     for i, entry in enumerate(st.session_state[SERIES_KEY]):
         cols = st.columns([1, 1, 1, 1, 1, 0.6])
         cols[0].write(f"**#{i + 1}** {gas_label(entry['gas_kind'])}")
-        cols[1].write(format_depth(entry["depth_fsw"], units))
+        cols[1].write(format_depth_both(entry["depth_fsw"]))
         cols[2].write(t("series_entry_bottom_min", minutes=entry["bottom_time_min"]))
         si = entry["surface_interval_before_min"]
         cols[3].write(
@@ -182,7 +182,7 @@ if st.session_state[SERIES_KEY]:
                 "dive_expander_title",
                 index=i + 1,
                 gas=gas_label(entry["gas_kind"]),
-                depth=format_depth(entry["depth_fsw"], units),
+                depth=format_depth_both(entry["depth_fsw"]),
                 minutes=entry["bottom_time_min"],
             ),
             expanded=(i == len(results) - 1),
@@ -206,7 +206,7 @@ if st.session_state[SERIES_KEY]:
             if result.stops:
                 schedule_rows = [
                     {
-                        t("col_stop_depth"): format_depth(s.depth_fsw, units),
+                        t("col_stop_depth"): format_depth_both(s.depth_fsw),
                         t("col_minutes"): s.minutes,
                         t("col_gas_phase"): s.gas_phase,
                     }
@@ -224,6 +224,7 @@ if st.session_state[SERIES_KEY]:
                 depth_converter=lambda fsw: depth_to_display(fsw, units),
             )
             st.altair_chart(chart, use_container_width=True)
+            st.caption(t("chart_units_caption", axis_unit=depth_label(units)))
             st.caption(t("idealized_plan_caption"))
 
 st.divider()

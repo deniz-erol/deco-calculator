@@ -19,6 +19,7 @@ import pandas as pd
 
 from app._i18n import t
 from engine.types import DiveResult
+from engine.units import fsw_to_m
 
 
 # Depiction-only transit rates (US Navy conventional planning rates).
@@ -105,6 +106,12 @@ def build_profile_chart(
     points = _profile_points(max_depth_fsw, bottom_time_min, result)
     df = pd.DataFrame(points)
     df["depth_display"] = df["depth_fsw"].apply(depth_converter)
+    # Meters are always derived from the canonical fsw value via the same
+    # geometric conversion the units toggle and slider use (engine.units
+    # .fsw_to_m), independent of the active `units` toggle — so both units
+    # are visible in the tooltip regardless of which unit the axis itself
+    # is drawn in.
+    df["depth_m"] = df["depth_fsw"].apply(fsw_to_m)
     depth_unit_label = t("depth_label_m") if units == "m" else t("depth_label_ft")
 
     max_display_depth = df["depth_display"].max()
@@ -113,6 +120,15 @@ def build_profile_chart(
     # headroom for the axis to render surface-at-top unambiguously.
     min_floor = 10.0 if units == "m" else 30.0
     axis_max = max(max_display_depth * 1.08, min_floor)
+
+    # Both units always in the tooltip: the axis-unit value plus whichever
+    # of fsw/m is NOT already the axis unit (avoids a redundant duplicate
+    # row when the axis is already in fsw).
+    depth_tooltips = [alt.Tooltip("depth_display:Q", title=depth_unit_label, format=".1f")]
+    if units == "m":
+        depth_tooltips.append(alt.Tooltip("depth_fsw:Q", title=t("depth_label_ft"), format=".0f"))
+    else:
+        depth_tooltips.append(alt.Tooltip("depth_m:Q", title=t("depth_label_m"), format=".1f"))
 
     line = (
         alt.Chart(df)
@@ -132,7 +148,7 @@ def build_profile_chart(
             ),
             tooltip=[
                 alt.Tooltip("time_min:Q", title=t("chart_tooltip_time")),
-                alt.Tooltip("depth_display:Q", title=depth_unit_label, format=".1f"),
+                *depth_tooltips,
                 alt.Tooltip("phase:N", title=t("chart_tooltip_phase")),
             ],
         )
@@ -146,7 +162,7 @@ def build_profile_chart(
             y="depth_display:Q",
             tooltip=[
                 alt.Tooltip("time_min:Q", title=t("chart_tooltip_time")),
-                alt.Tooltip("depth_display:Q", title=depth_unit_label, format=".1f"),
+                *depth_tooltips,
                 alt.Tooltip("phase:N", title=t("chart_tooltip_phase")),
             ],
         )
