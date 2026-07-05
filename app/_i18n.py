@@ -41,6 +41,14 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
             "ve yetkili gözetim eşliğinde planlayın."
         ),
     },
+    "disclaimer_text_compact": {
+        "en": "⚠️ Academic prototype — not for real dive planning. Full disclaimer below.",
+        "tr": "⚠️ Akademik prototip — gerçek dalış planlaması için değildir. Tam metin aşağıda.",
+    },
+    "disclaimer_expander_label": {
+        "en": "Read the full safety disclaimer",
+        "tr": "Tam güvenlik uyarısını oku",
+    },
     # --- Data-provenance banner (render_result_warnings) ---
     "provenance_banner": {
         "en": (
@@ -186,7 +194,21 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     "heliox_o2_mix_label": {"en": "O2 % (heliox mix)", "tr": "O2 % (helioks karışımı)"},
     "depth_label_ft": {"en": "Depth (fsw)", "tr": "Derinlik (fsw)"},
     "depth_label_m": {"en": "Depth (m)", "tr": "Derinlik (m)"},
+    "depth_input_help": {
+        "en": "Maximum depth reached during the dive — the table is consulted at this depth.",
+        "tr": "Dalış sırasında ulaşılan en fazla derinlik — tablo bu derinlikte sorgulanır.",
+    },
     "bottom_time_label": {"en": "Bottom time (min)", "tr": "Dip süresi (dk)"},
+    "bottom_time_help": {
+        "en": (
+            "US Navy bottom time: from leaving the surface until beginning "
+            "the ascent — includes the descent."
+        ),
+        "tr": (
+            "US Navy dip süresi: yüzeyden ayrılıştan çıkışa başlanana kadar "
+            "— inişi de içerir."
+        ),
+    },
     "invalid_dive_params_error": {
         "en": "Invalid dive parameters: {error}",
         "tr": "Geçersiz dalış parametreleri: {error}",

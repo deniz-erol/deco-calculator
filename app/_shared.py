@@ -30,13 +30,26 @@ METERS = "m"
 #   plan_dive_prefill        -> dict | None                 (values pushed from Profiles)
 
 
-def render_disclaimer() -> None:
-    """Render the persistent, full-width safety disclaimer banner.
+def render_disclaimer(compact: bool = False) -> None:
+    """Render the persistent safety disclaimer.
 
     Called at the top of every page (Home + every page in ``app/pages``)
     so the disclaimer is unmissable regardless of which page is active.
+
+    ``compact=False`` (default) renders the full warning banner exactly
+    as before — Home, Profiles, and About keep this untouched. Pages
+    tight on vertical space above the fold (the Planner, whose inputs
+    and chart must both stay visible without scrolling) can pass
+    ``compact=True`` instead: a single bold one-line warning, with the
+    full disclaimer text still reachable (never removed) inside an
+    ``st.expander`` right below it.
     """
-    st.warning(t("disclaimer_text"), icon="⚠️")
+    if not compact:
+        st.warning(t("disclaimer_text"), icon="⚠️")
+        return
+    st.warning(t("disclaimer_text_compact"), icon="⚠️")
+    with st.expander(t("disclaimer_expander_label")):
+        st.markdown(t("disclaimer_text"))
 
 
 def init_units_toggle() -> str:

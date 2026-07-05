@@ -57,8 +57,8 @@ from engine.units import fsw_to_m
 
 st.set_page_config(page_title="Planner", page_icon="🧭", layout="wide")
 
-st.title(t("planner_page_title"))
-render_disclaimer()
+st.markdown(f"### {t('planner_page_title')}")
+render_disclaimer(compact=True)
 
 units, _lang = render_sidebar_toggles(st.sidebar)
 
@@ -349,6 +349,7 @@ with left:
                 max_value=round(max_depth_display, 1),
                 step=float(step_size) if units == "ft" else round(float(step_size) / 3.28084, 2),
                 key=DEPTH_KEY,
+                help=t("depth_input_help"),
             )
             depth_fsw = depth_to_fsw(display_depth, units)
             # Live equivalent-unit caption: the input's own unit is still
@@ -374,6 +375,7 @@ with left:
             max_value=MAX_TIME_MIN,
             step=float(step_size),
             key=TIME_KEY,
+            help=t("bottom_time_help"),
         )
 
     if not is_first_dive:
@@ -478,81 +480,18 @@ except (ValueError, TableRangeError) as exc:
     st.stop()
 
 with right:
-    # A single, translated provenance disclaimer for the whole page —
-    # rendered once here (not once per dive) even though a repetitive chain
-    # typically touches multiple seeded tables (9-7, 9-8, 9-9) that would
-    # otherwise each carry their own warning.
-    if any(has_provenance_warning(result) for result in results):
-        render_provenance_banner()
-
     # -----------------------------------------------------------------------
     # Results: a lone dive gets the clean single-result view; two or more
-    # dives get the chained per-dive expander view.
+    # dives get the chained per-dive expander view. In both views the
+    # profile chart leads the column (the original complaint was "I can't
+    # see the PROFILE while setting parameters") — metrics, warnings, and
+    # the schedule table follow below it.
     # -----------------------------------------------------------------------
     if len(results) == 1:
         result = results[0]
-        render_result_warnings(result)
 
-        st.subheader(t("result_summary_header"))
-        # 2x2 grid (not a 4-up row): the right column is narrower than full
-        # page width, and repetitive-group/stop-time labels are long enough
-        # to truncate in a 4-up row at this width.
-        row1a, row1b = st.columns(2)
-        row1a.metric(
-            t("status_label"),
-            t("status_no_deco") if result.no_decompression else t("status_deco_required"),
-        )
-        row1b.metric(t("ndl_label"), f"{result.ndl_min:g}" if result.ndl_min is not None else "—")
-        row2a, row2b = st.columns(2)
-        row2a.metric(
-            t("time_to_first_stop_label"),
-            f"{result.time_to_first_stop:g}" if result.time_to_first_stop is not None else "—",
-        )
-        row2b.metric(t("repetitive_group_label"), result.repetitive_group or t("not_applicable"))
-
-        row3a, row3b = st.columns(2)
-        row3a.metric(t("total_stop_time_label"), f"{result.total_stop_min:g}")
-        row3b.metric(
-            t("residual_nitrogen_time_label"),
-            f"{result.residual_nitrogen_time_min:g}"
-            if result.residual_nitrogen_time_min is not None
-            else "—",
-        )
-        st.metric(t("table_source_label"), result.table_source)
-
-        if gas_kind == "nitrox":
-            st.info(
-                t(
-                    "nitrox_ead_info",
-                    actual_depth=format_depth_both(result.actual_depth_fsw),
-                    ead_depth=format_depth_both(result.ead_fsw),
-                )
-            )
-        elif gas_kind == "heliox":
-            phases = sorted({s.gas_phase for s in result.stops})
-            if phases:
-                st.info(t("heliox_gas_phases_info", phases=", ".join(phases)))
-
-        st.subheader(t("decompression_schedule_header"))
-        if result.stops:
-            schedule_rows = [
-                {
-                    t("col_stop_depth"): format_depth_both(stop.depth_fsw),
-                    t("col_minutes"): stop.minutes,
-                    t("col_gas_phase"): stop.gas_phase,
-                }
-                for stop in result.stops
-            ]
-            st.dataframe(schedule_rows, use_container_width=True, hide_index=True)
-        else:
-            st.success(t("no_deco_stops_success"))
-
-        st.subheader(t("dive_profile_header"))
+        st.markdown(f"#### {t('dive_profile_header')}")
         depth_draggable = gas_kind != "heliox"
-        drag_hint_key = "drag_hint_with_depth" if depth_draggable else "drag_hint_no_depth"
-        st.caption(t(drag_hint_key))
-        st.caption(t("chart_drag_tip"))
-        st.caption(t("chart_units_caption", axis_unit=depth_label(units)))
         chart = build_profile_chart(
             max_depth_fsw=result.actual_depth_fsw or depth_fsw,
             bottom_time_min=bottom_time_min,
@@ -623,9 +562,81 @@ with right:
                 if applied:
                     st.rerun()
 
+        drag_hint_key = "drag_hint_with_depth" if depth_draggable else "drag_hint_no_depth"
+        st.caption(t(drag_hint_key))
+        st.caption(t("chart_drag_tip"))
+        st.caption(t("chart_units_caption", axis_unit=depth_label(units)))
         st.caption(t("idealized_plan_caption"))
 
+        # A single, translated provenance disclaimer for the whole result —
+        # placed below the chart, above the metrics that it qualifies.
+        if has_provenance_warning(result):
+            render_provenance_banner()
+
+        render_result_warnings(result)
+
+        st.subheader(t("result_summary_header"))
+        # 2x2 grid (not a 4-up row): the right column is narrower than full
+        # page width, and repetitive-group/stop-time labels are long enough
+        # to truncate in a 4-up row at this width.
+        row1a, row1b = st.columns(2)
+        row1a.metric(
+            t("status_label"),
+            t("status_no_deco") if result.no_decompression else t("status_deco_required"),
+        )
+        row1b.metric(t("ndl_label"), f"{result.ndl_min:g}" if result.ndl_min is not None else "—")
+        row2a, row2b = st.columns(2)
+        row2a.metric(
+            t("time_to_first_stop_label"),
+            f"{result.time_to_first_stop:g}" if result.time_to_first_stop is not None else "—",
+        )
+        row2b.metric(t("repetitive_group_label"), result.repetitive_group or t("not_applicable"))
+
+        row3a, row3b = st.columns(2)
+        row3a.metric(t("total_stop_time_label"), f"{result.total_stop_min:g}")
+        row3b.metric(
+            t("residual_nitrogen_time_label"),
+            f"{result.residual_nitrogen_time_min:g}"
+            if result.residual_nitrogen_time_min is not None
+            else "—",
+        )
+        st.metric(t("table_source_label"), result.table_source)
+
+        if gas_kind == "nitrox":
+            st.info(
+                t(
+                    "nitrox_ead_info",
+                    actual_depth=format_depth_both(result.actual_depth_fsw),
+                    ead_depth=format_depth_both(result.ead_fsw),
+                )
+            )
+        elif gas_kind == "heliox":
+            phases = sorted({s.gas_phase for s in result.stops})
+            if phases:
+                st.info(t("heliox_gas_phases_info", phases=", ".join(phases)))
+
+        st.subheader(t("decompression_schedule_header"))
+        if result.stops:
+            schedule_rows = [
+                {
+                    t("col_stop_depth"): format_depth_both(stop.depth_fsw),
+                    t("col_minutes"): stop.minutes,
+                    t("col_gas_phase"): stop.gas_phase,
+                }
+                for stop in result.stops
+            ]
+            st.dataframe(schedule_rows, use_container_width=True, hide_index=True)
+        else:
+            st.success(t("no_deco_stops_success"))
+
     else:
+        # A single, translated provenance disclaimer for the whole page —
+        # rendered once here (not once per dive) even though a repetitive chain
+        # typically touches multiple seeded tables (9-7, 9-8, 9-9) that would
+        # otherwise each carry their own warning.
+        if any(has_provenance_warning(result) for result in results):
+            render_provenance_banner()
+
         st.subheader(t("chained_results_header"))
         all_entries = list(st.session_state[PLANNER_DIVES_KEY]) + [
             {
@@ -637,6 +648,25 @@ with right:
                 "surface_interval_before_min": active_si_min,
             }
         ]
+
+        # The active (last) dive's chart leads the column — same profile
+        # chart that would render inside its own expander below, promoted
+        # to the top so it's visible alongside the inputs without opening
+        # anything. Static (no chart-drag brush wiring): drag-to-set stays
+        # a single-dive-view affordance, per the active dive's expander.
+        last_entry, last_result = all_entries[-1], results[-1]
+        st.markdown(f"#### {t('dive_profile_header')}")
+        leading_chart = build_profile_chart(
+            max_depth_fsw=last_result.actual_depth_fsw or last_entry["depth_fsw"],
+            bottom_time_min=last_entry["bottom_time_min"],
+            result=last_result,
+            units=units,
+            depth_converter=lambda fsw: depth_to_display(fsw, units),
+        )
+        st.altair_chart(leading_chart, use_container_width=True)
+        st.caption(t("chart_units_caption", axis_unit=depth_label(units)))
+        st.caption(t("idealized_plan_caption"))
+
         for i, (entry, result) in enumerate(zip(all_entries, results)):
             with st.expander(
                 t(
