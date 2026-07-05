@@ -100,8 +100,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
     },
     "home_get_started": {"en": "Get started", "tr": "Başlarken"},
-    "home_link_plan_dive": {"en": "Plan a single dive", "tr": "Tek dalış planla"},
-    "home_link_dive_series": {"en": "Build a dive series", "tr": "Dalış serisi oluştur"},
+    "home_link_planner": {"en": "Plan a dive (or a series)", "tr": "Dalış (veya seri) planla"},
     "home_link_profiles": {"en": "Profiles", "tr": "Profiller"},
     "home_link_about": {"en": "About & sources", "tr": "Hakkında ve kaynaklar"},
     "home_footer_caption": {
@@ -114,17 +113,44 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
             "güvenlik uyarısı her sayfada mevcuttur."
         ),
     },
-    # --- Plan Dive page ---
-    "plan_dive_page_title": {"en": "Plan a Single Dive", "tr": "Tek Dalış Planla"},
-    "plan_dive_sidebar_caption": {
-        "en": "This page plans one standalone dive. For chained repetitive dives, use **Dive Series**.",
-        "tr": "Bu sayfa tek bir bağımsız dalış planlar. Zincirlenmiş tekrarlı dalışlar için **Dalış Serisi**'ni kullanın.",
+    # --- Planner page (unified single-dive + repetitive-series planner) ---
+    "planner_page_title": {"en": "Plan a Dive", "tr": "Dalış Planla"},
+    "planner_sidebar_caption": {
+        "en": (
+            "Plan one dive, or use **+ Add repetitive dive** to chain more "
+            "dives through the surface-interval / residual-nitrogen-time "
+            "tables (9-8). Heliox has no repetitive-group system and is "
+            "always planned standalone, even inside a chain."
+        ),
+        "tr": (
+            "Tek bir dalış planlayın veya yüzey aralığı / artık azot süresi "
+            "tabloları (9-8) üzerinden daha fazla dalışı zincirlemek için "
+            "**+ Tekrarlı dalış ekle**'yi kullanın. Helioks'ta tekrar grubu "
+            "sistemi yoktur ve bir zincir içinde bile her zaman bağımsız "
+            "olarak planlanır."
+        ),
     },
     "dive_parameters_header": {"en": "Dive parameters", "tr": "Dalış parametreleri"},
-    "slider_step_label": {"en": "Slider step size", "tr": "Kaydırıcı adım boyutu"},
+    "active_dive_label": {"en": "Dive #{index}", "tr": "Dalış #{index}"},
+    "add_repetitive_dive_button": {
+        "en": "+ Add repetitive dive",
+        "tr": "+ Tekrarlı dalış ekle",
+    },
+    "add_repetitive_dive_help": {
+        "en": (
+            "Commits this dive and opens a new one, chained after it via a "
+            "surface interval."
+        ),
+        "tr": (
+            "Bu dalışı onaylar ve bir yüzey aralığı üzerinden ona zincirlenmiş "
+            "yeni bir dalış açar."
+        ),
+    },
+    "committed_dives_header": {"en": "Committed dives", "tr": "Onaylanmış dalışlar"},
+    "slider_step_label": {"en": "Step size", "tr": "Adım boyutu"},
     "slider_step_help": {
-        "en": "Increment used by the depth and bottom-time sliders.",
-        "tr": "Derinlik ve dip süresi kaydırıcılarında kullanılan artış miktarı.",
+        "en": "Increment used by the depth and bottom-time inputs.",
+        "tr": "Derinlik ve dip süresi girişlerinde kullanılan artış miktarı.",
     },
     "gas_label": {"en": "Gas", "tr": "Gaz"},
     "gas_air": {"en": "Air", "tr": "Hava"},
@@ -164,18 +190,6 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     "invalid_dive_params_error": {
         "en": "Invalid dive parameters: {error}",
         "tr": "Geçersiz dalış parametreleri: {error}",
-    },
-    "plan_dive_engine_error": {
-        "en": (
-            "Could not plan this dive with the seeded table data: {error}\n\n"
-            "Try a depth/time combination closer to the seeded ranges "
-            "(see **About** for coverage notes)."
-        ),
-        "tr": (
-            "Bu dalış, mevcut tablo verileriyle planlanamadı: {error}\n\n"
-            "Mevcut aralıklara daha yakın bir derinlik/süre kombinasyonu deneyin "
-            "(kapsam notları için **Hakkında** sayfasına bakın)."
-        ),
     },
     "result_summary_header": {"en": "Result summary", "tr": "Sonuç özeti"},
     "status_label": {"en": "Status", "tr": "Durum"},
@@ -273,52 +287,19 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "en": "Depth axis: {axis_unit} — hover a point for the fsw/m equivalent.",
         "tr": "Derinlik ekseni: {axis_unit} — fsw/m karşılığı için bir noktanın üzerine gelin.",
     },
-    # --- Dive Series page ---
-    "dive_series_page_title": {
-        "en": "Dive Series (Repetitive Dives)",
-        "tr": "Dalış Serisi (Tekrarlı Dalışlar)",
-    },
-    "dive_series_sidebar_caption": {
-        "en": (
-            "Air/nitrox dives chain through the surface-interval / residual-"
-            "nitrogen-time tables (9-8). Heliox has no repetitive-group system and "
-            "is always planned standalone, even inside a series."
-        ),
-        "tr": (
-            "Hava/nitroks dalışları yüzey aralığı / artık azot süresi tabloları "
-            "(9-8) üzerinden zincirlenir. Helioks'ta tekrar grubu sistemi yoktur "
-            "ve bir seri içinde bile her zaman bağımsız olarak planlanır."
-        ),
-    },
-    "build_series_header": {"en": "Build the series", "tr": "Seriyi oluştur"},
-    "build_series_caption": {
-        "en": "Add dives in order. The first dive has no surface interval; every subsequent dive needs one.",
-        "tr": "Dalışları sırayla ekleyin. İlk dalışın yüzey aralığı yoktur; sonraki her dalış için bir yüzey aralığı gerekir.",
-    },
-    "o2_pct_label": {"en": "O2 %", "tr": "O2 %"},
-    "o2_pct_heliox_label": {"en": "O2 % (heliox)", "tr": "O2 % (helioks)"},
-    "o2_pct_air_display": {"en": "21 (air)", "tr": "21 (hava)"},
+    # --- Repetitive-dive chaining (used by the unified Planner page once
+    # a second dive is added) ---
     "surface_interval_before_label": {
         "en": "Surface interval before (min)",
         "tr": "Öncesindeki yüzey aralığı (dk)",
     },
     "surface_interval_before_help": {
-        "en": "Disabled for the first dive of a series (no prior dive).",
-        "tr": "Serinin ilk dalışı için devre dışıdır (önceki dalış yok).",
+        "en": "Disabled for the first dive (no prior dive).",
+        "tr": "İlk dalış için devre dışıdır (önceki dalış yok).",
     },
-    "add_dive_button": {"en": "Add dive to series", "tr": "Seriye dalış ekle"},
-    "invalid_gas_mix_error": {"en": "Invalid gas mix: {error}", "tr": "Geçersiz gaz karışımı: {error}"},
-    "series_so_far_header": {"en": "Series so far", "tr": "Şimdiye kadarki seri"},
     "series_entry_bottom_min": {"en": "{minutes:g} min bottom", "tr": "{minutes:g} dk dip"},
     "series_entry_first_no_si": {"en": "First dive — no SI", "tr": "İlk dalış — yüzey aralığı yok"},
-    "series_entry_si": {"en": "SI {minutes:g} min", "tr": "Yüzey aralığı {minutes:g} dk"},
-    "series_entry_o2": {"en": "O2 {pct:.1f}%", "tr": "O2 %{pct:.1f}"},
     "remove_button": {"en": "Remove", "tr": "Kaldır"},
-    "clear_series_button": {"en": "Clear entire series", "tr": "Tüm seriyi temizle"},
-    "no_dives_added_info": {
-        "en": "No dives added yet. Use the form above to add the first dive.",
-        "tr": "Henüz dalış eklenmedi. İlk dalışı eklemek için yukarıdaki formu kullanın.",
-    },
     "chained_results_header": {"en": "Chained results", "tr": "Zincirlenmiş sonuçlar"},
     "plan_series_engine_error": {
         "en": (
@@ -337,10 +318,6 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "tr": "Dalış #{index} — {gas} @ {depth}, {minutes:g} dk dip süresi",
     },
     "save_series_header": {"en": "Save this series to a profile", "tr": "Bu seriyi bir profile kaydet"},
-    "save_series_need_dive_caption": {
-        "en": "Add at least one dive before saving.",
-        "tr": "Kaydetmeden önce en az bir dalış ekleyin.",
-    },
     "user_label": {"en": "User", "tr": "Kullanıcı"},
     "new_user_option": {"en": "<new user>", "tr": "<yeni kullanıcı>"},
     "new_user_id_label": {"en": "New user id (no slashes)", "tr": "Yeni kullanıcı kimliği (eğik çizgisiz)"},
@@ -367,8 +344,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     "mode_existing_user": {"en": "Existing user", "tr": "Mevcut kullanıcı"},
     "mode_create_new_user": {"en": "Create new user", "tr": "Yeni kullanıcı oluştur"},
     "no_profiles_info": {
-        "en": "No profiles saved yet. Create one, or save a series from Dive Series.",
-        "tr": "Henüz kaydedilmiş profil yok. Bir profil oluşturun veya Dalış Serisi'nden bir seri kaydedin.",
+        "en": "No profiles saved yet. Create one, or save a plan from the Planner.",
+        "tr": "Henüz kaydedilmiş profil yok. Bir profil oluşturun veya Planlayıcı'dan bir plan kaydedin.",
     },
     "display_name_label": {"en": "Display name", "tr": "Görünen ad"},
     "create_profile_button": {"en": "Create profile", "tr": "Profil oluştur"},
@@ -391,8 +368,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     },
     "saved_series_header": {"en": "{name}'s saved series", "tr": "{name} adlı kullanıcının kayıtlı serileri"},
     "no_series_saved_info": {
-        "en": "No series saved for this user yet. Build one on the Dive Series page.",
-        "tr": "Bu kullanıcı için henüz kayıtlı seri yok. Dalış Serisi sayfasında bir tane oluşturun.",
+        "en": "No series saved for this user yet. Build one on the Planner page.",
+        "tr": "Bu kullanıcı için henüz kayıtlı seri yok. Planlayıcı sayfasında bir tane oluşturun.",
     },
     "series_expander_title": {
         "en": "{label} ({count} dive(s))",
@@ -408,20 +385,20 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "tr": " (ilk dalış, yüzey aralığı yok)",
     },
     "load_into_series_button": {
-        "en": "Load into Dive Series builder",
-        "tr": "Dalış Serisi oluşturucusuna yükle",
+        "en": "Load into Planner",
+        "tr": "Planlayıcı'ya yükle",
     },
     "series_loaded_success": {
-        "en": "Series loaded. Open **Dive Series** from the sidebar to view/edit it.",
-        "tr": "Seri yüklendi. Görüntülemek/düzenlemek için kenar çubuğundan **Dalış Serisi**'ni açın.",
+        "en": "Series loaded. Open **Planner** from the sidebar to view/edit it.",
+        "tr": "Seri yüklendi. Görüntülemek/düzenlemek için kenar çubuğundan **Planlayıcı**'yı açın.",
     },
     "load_first_into_plan_button": {
-        "en": "Load first dive into Plan Dive",
-        "tr": "İlk dalışı Dalış Planla'ya yükle",
+        "en": "Load first dive only into Planner",
+        "tr": "Yalnızca ilk dalışı Planlayıcı'ya yükle",
     },
     "first_dive_loaded_success": {
-        "en": "First dive loaded. Open **Plan Dive** from the sidebar to view it.",
-        "tr": "İlk dalış yüklendi. Görüntülemek için kenar çubuğundan **Dalış Planla**'yı açın.",
+        "en": "First dive loaded. Open **Planner** from the sidebar to view it.",
+        "tr": "İlk dalış yüklendi. Görüntülemek için kenar çubuğundan **Planlayıcı**'yı açın.",
     },
     # --- About page ---
     "about_page_title": {"en": "About This Tool", "tr": "Bu Araç Hakkında"},

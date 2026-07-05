@@ -26,15 +26,13 @@ render_disclaimer()
 st.markdown(t("home_intro"))
 
 st.subheader(t("home_get_started"))
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3 = st.columns(3)
 with col1:
-    st.page_link("pages/1_Plan_Dive.py", label=t("home_link_plan_dive"), icon="🧭")
+    st.page_link("pages/1_Planner.py", label=t("home_link_planner"), icon="🧭")
 with col2:
-    st.page_link("pages/2_Dive_Series.py", label=t("home_link_dive_series"), icon="🔁")
+    st.page_link("pages/2_Profiles.py", label=t("home_link_profiles"), icon="👤")
 with col3:
-    st.page_link("pages/3_Profiles.py", label=t("home_link_profiles"), icon="👤")
-with col4:
-    st.page_link("pages/4_About.py", label=t("home_link_about"), icon="📖")
+    st.page_link("pages/3_About.py", label=t("home_link_about"), icon="📖")
 
 st.divider()
 st.caption(t("home_footer_caption"))

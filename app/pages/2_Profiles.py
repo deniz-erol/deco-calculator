@@ -1,5 +1,5 @@
 """Profiles — pick or create a user, list their saved series, and load
-one back into the Plan Dive / Dive Series pages.
+one back into the unified Planner page.
 """
 
 from __future__ import annotations
