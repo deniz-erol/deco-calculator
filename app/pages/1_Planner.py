@@ -246,14 +246,15 @@ def _commit_active_dive() -> None:
     st.session_state[ACTIVE_SI_KEY] = 60.0
 
 
-st.subheader(t("dive_parameters_header"))
+left, right = st.columns([2, 3], gap="large")
 
-is_first_dive = not st.session_state[PLANNER_DIVES_KEY]
-dive_number = len(st.session_state[PLANNER_DIVES_KEY]) + 1
-st.markdown(f"**{t('active_dive_label', index=dive_number)}**")
+with left:
+    st.subheader(t("dive_parameters_header"))
 
-step_col, _spacer = st.columns([1, 3])
-with step_col:
+    is_first_dive = not st.session_state[PLANNER_DIVES_KEY]
+    dive_number = len(st.session_state[PLANNER_DIVES_KEY]) + 1
+    st.markdown(f"**{t('active_dive_label', index=dive_number)}**")
+
     if hasattr(st, "segmented_control"):
         step_size = st.segmented_control(
             t("slider_step_label"),
@@ -274,9 +275,6 @@ with step_col:
     if not step_size:
         step_size = 5
 
-col_gas, col_depth, col_time = st.columns([1, 1, 1])
-
-with col_gas:
     gas_kind = st.selectbox(
         t("gas_label"),
         options=gas_options,
@@ -285,12 +283,11 @@ with col_gas:
         format_func=lambda k: {"air": t("gas_air"), "nitrox": t("gas_nitrox"), "heliox": t("gas_heliox")}[k],
     )
 
-fo2 = 0.21
-fhe = 0.0
-heliox_depth_options: list[float] = []
+    fo2 = 0.21
+    fhe = 0.0
+    heliox_depth_options: list[float] = []
 
-if gas_kind == "nitrox":
-    with col_gas:
+    if gas_kind == "nitrox":
         o2_pct = st.number_input(
             t("o2_pct_nitrox_label"),
             min_value=21.0,
@@ -301,137 +298,143 @@ if gas_kind == "nitrox":
             help=t("o2_pct_nitrox_help"),
         )
         fo2 = o2_pct / 100.0
-elif gas_kind == "heliox":
-    try:
-        heliox_data = load_table("heliox_12-4.json")
-        heliox_depth_options = [float(d) for d in heliox_data["depths_fsw"]]
-    except FileNotFoundError as exc:
-        st.error(t("heliox_load_error", error=exc))
-        st.stop()
+    elif gas_kind == "heliox":
+        try:
+            heliox_data = load_table("heliox_12-4.json")
+            heliox_depth_options = [float(d) for d in heliox_data["depths_fsw"]]
+        except FileNotFoundError as exc:
+            st.error(t("heliox_load_error", error=exc))
+            st.stop()
 
-with col_depth:
-    if gas_kind == "heliox":
-        depth_display_options = [
-            depth_to_display(d, units) for d in heliox_depth_options
-        ]
-        chosen_display_depth = st.selectbox(
-            t("heliox_depth_label", depth_label=depth_label(units)),
-            options=depth_display_options,
-            index=0,
-            help=t("heliox_depth_help"),
-        )
-        depth_fsw = depth_to_fsw(chosen_display_depth, units)
-        depth_key = str(int(depth_fsw))
-        row = heliox_data["rows"][depth_key]
-        max_o2, min_o2 = row["max_o2_pct"], row["min_o2_pct"]
-        st.caption(t("heliox_o2_window_caption", min_o2=min_o2, max_o2=max_o2))
-        default_o2_pct = (max_o2 + min_o2) / 2.0
-        o2_pct = st.slider(
-            t("heliox_o2_mix_label"),
-            min_value=float(min_o2),
-            max_value=float(max_o2),
-            value=float(default_o2_pct),
-            step=0.5,
-            key=ACTIVE_HELIOX_O2_KEY,
-        )
-        fo2 = o2_pct / 100.0
-        fhe = 1.0 - fo2
-    else:
-        max_depth_display = depth_to_display(MAX_DEPTH_FSW, units)
-        # Clamp the stored value into range before the widget reads it —
-        # protects against a stale value left over from a unit switch or
-        # an out-of-range chart drag on a previous run.
-        st.session_state[DEPTH_KEY] = _clamp(
-            st.session_state[DEPTH_KEY], 0.0, max_depth_display
-        )
-        display_depth = st.number_input(
-            depth_label(units),
-            min_value=0.0,
-            max_value=round(max_depth_display, 1),
-            step=float(step_size) if units == "ft" else round(float(step_size) / 3.28084, 2),
-            key=DEPTH_KEY,
-        )
-        depth_fsw = depth_to_fsw(display_depth, units)
-        # Live equivalent-unit caption: the input's own unit is still
-        # governed by the units toggle, but the other unit is always
-        # shown alongside it so both are visible while adjusting.
-        if units == "ft":
-            st.caption(f"≈ {fsw_to_m(depth_fsw):.1f} m")
-        else:
-            st.caption(f"≈ {round(depth_fsw):g} fsw")
+    col_depth, col_time = st.columns([1, 1])
 
-# Stash the resolved depth (correct for all three gas kinds — air/nitrox's
-# number_input, or heliox's depth-selectbox, which never writes DEPTH_KEY)
-# into a plain, non-widget session_state key every run, so the "Add
-# repetitive dive" callback below can read the *actual* active depth
-# instead of re-deriving it from DEPTH_KEY, which heliox never touches.
-st.session_state[ACTIVE_DEPTH_FSW_KEY] = depth_fsw
-
-with col_time:
-    st.session_state[TIME_KEY] = _clamp(st.session_state[TIME_KEY], 1.0, MAX_TIME_MIN)
-    bottom_time_min = st.number_input(
-        t("bottom_time_label"),
-        min_value=1.0,
-        max_value=MAX_TIME_MIN,
-        step=float(step_size),
-        key=TIME_KEY,
-    )
-
-if not is_first_dive:
-    st.session_state.setdefault(ACTIVE_SI_KEY, 60.0)
-    active_si_min = st.number_input(
-        t("surface_interval_before_label"),
-        min_value=0.0,
-        step=5.0,
-        key=ACTIVE_SI_KEY,
-        help=t("surface_interval_before_help"),
-    )
-else:
-    active_si_min = None
-
-st.button(
-    t("add_repetitive_dive_button"),
-    on_click=_commit_active_dive,
-    help=t("add_repetitive_dive_help"),
-)
-
-st.divider()
-
-# ---------------------------------------------------------------------------
-# Render committed dives (if any) with in-place, per-row editable surface
-# interval and a remove button — both keyed by the dive's stable "_id",
-# not its list position, so removing a dive can never reattach another
-# row's widget state to the wrong dive.
-# ---------------------------------------------------------------------------
-if st.session_state[PLANNER_DIVES_KEY]:
-    st.subheader(t("committed_dives_header"))
-    remove_id: int | None = None
-    for i, entry in enumerate(st.session_state[PLANNER_DIVES_KEY]):
-        row_id = entry["_id"]
-        cols = st.columns([1.2, 1, 1, 1.2, 0.6])
-        cols[0].write(f"**#{i + 1}** {gas_label(entry['gas_kind'])}")
-        cols[1].write(format_depth_both(entry["depth_fsw"]))
-        cols[2].write(t("series_entry_bottom_min", minutes=entry["bottom_time_min"]))
-        if entry["surface_interval_before_min"] is None:
-            cols[3].write(t("series_entry_first_no_si"))
-        else:
-            new_si = cols[3].number_input(
-                t("surface_interval_before_label"),
-                min_value=0.0,
-                step=5.0,
-                value=float(entry["surface_interval_before_min"]),
-                key=f"planner_si_{row_id}",
-                label_visibility="collapsed",
+    with col_depth:
+        if gas_kind == "heliox":
+            depth_display_options = [
+                depth_to_display(d, units) for d in heliox_depth_options
+            ]
+            chosen_display_depth = st.selectbox(
+                t("heliox_depth_label", depth_label=depth_label(units)),
+                options=depth_display_options,
+                index=0,
+                help=t("heliox_depth_help"),
             )
-            entry["surface_interval_before_min"] = new_si
-        if cols[4].button(t("remove_button"), key=f"planner_remove_{row_id}"):
-            remove_id = row_id
-    if remove_id is not None:
-        st.session_state[PLANNER_DIVES_KEY] = [
-            e for e in st.session_state[PLANNER_DIVES_KEY] if e["_id"] != remove_id
-        ]
-        st.rerun()
+            depth_fsw = depth_to_fsw(chosen_display_depth, units)
+            depth_key = str(int(depth_fsw))
+            row = heliox_data["rows"][depth_key]
+            max_o2, min_o2 = row["max_o2_pct"], row["min_o2_pct"]
+            st.caption(t("heliox_o2_window_caption", min_o2=min_o2, max_o2=max_o2))
+            default_o2_pct = (max_o2 + min_o2) / 2.0
+            o2_pct = st.slider(
+                t("heliox_o2_mix_label"),
+                min_value=float(min_o2),
+                max_value=float(max_o2),
+                value=float(default_o2_pct),
+                step=0.5,
+                key=ACTIVE_HELIOX_O2_KEY,
+            )
+            fo2 = o2_pct / 100.0
+            fhe = 1.0 - fo2
+        else:
+            max_depth_display = depth_to_display(MAX_DEPTH_FSW, units)
+            # Clamp the stored value into range before the widget reads it —
+            # protects against a stale value left over from a unit switch or
+            # an out-of-range chart drag on a previous run.
+            st.session_state[DEPTH_KEY] = _clamp(
+                st.session_state[DEPTH_KEY], 0.0, max_depth_display
+            )
+            display_depth = st.number_input(
+                depth_label(units),
+                min_value=0.0,
+                max_value=round(max_depth_display, 1),
+                step=float(step_size) if units == "ft" else round(float(step_size) / 3.28084, 2),
+                key=DEPTH_KEY,
+            )
+            depth_fsw = depth_to_fsw(display_depth, units)
+            # Live equivalent-unit caption: the input's own unit is still
+            # governed by the units toggle, but the other unit is always
+            # shown alongside it so both are visible while adjusting.
+            if units == "ft":
+                st.caption(f"≈ {fsw_to_m(depth_fsw):.1f} m")
+            else:
+                st.caption(f"≈ {round(depth_fsw):g} fsw")
+
+    # Stash the resolved depth (correct for all three gas kinds — air/nitrox's
+    # number_input, or heliox's depth-selectbox, which never writes DEPTH_KEY)
+    # into a plain, non-widget session_state key every run, so the "Add
+    # repetitive dive" callback below can read the *actual* active depth
+    # instead of re-deriving it from DEPTH_KEY, which heliox never touches.
+    st.session_state[ACTIVE_DEPTH_FSW_KEY] = depth_fsw
+
+    with col_time:
+        st.session_state[TIME_KEY] = _clamp(st.session_state[TIME_KEY], 1.0, MAX_TIME_MIN)
+        bottom_time_min = st.number_input(
+            t("bottom_time_label"),
+            min_value=1.0,
+            max_value=MAX_TIME_MIN,
+            step=float(step_size),
+            key=TIME_KEY,
+        )
+
+    if not is_first_dive:
+        st.session_state.setdefault(ACTIVE_SI_KEY, 60.0)
+        active_si_min = st.number_input(
+            t("surface_interval_before_label"),
+            min_value=0.0,
+            step=5.0,
+            key=ACTIVE_SI_KEY,
+            help=t("surface_interval_before_help"),
+        )
+    else:
+        active_si_min = None
+
+    st.button(
+        t("add_repetitive_dive_button"),
+        on_click=_commit_active_dive,
+        help=t("add_repetitive_dive_help"),
+    )
+
     st.divider()
+
+    # -----------------------------------------------------------------------
+    # Render committed dives (if any) with in-place, per-row editable surface
+    # interval and a remove button — both keyed by the dive's stable "_id",
+    # not its list position, so removing a dive can never reattach another
+    # row's widget state to the wrong dive. Stacked one-per-row (rather than
+    # a single wide multi-column row) since the left column is narrower now
+    # that inputs and results sit side by side.
+    # -----------------------------------------------------------------------
+    if st.session_state[PLANNER_DIVES_KEY]:
+        st.subheader(t("committed_dives_header"))
+        remove_id: int | None = None
+        for i, entry in enumerate(st.session_state[PLANNER_DIVES_KEY]):
+            row_id = entry["_id"]
+            st.markdown(f"**#{i + 1}** {gas_label(entry['gas_kind'])}")
+            info_col, si_col, remove_col = st.columns([1.4, 1.2, 0.6])
+            info_col.write(
+                f"{format_depth_both(entry['depth_fsw'])} · "
+                f"{t('series_entry_bottom_min', minutes=entry['bottom_time_min'])}"
+            )
+            if entry["surface_interval_before_min"] is None:
+                si_col.write(t("series_entry_first_no_si"))
+            else:
+                new_si = si_col.number_input(
+                    t("surface_interval_before_label"),
+                    min_value=0.0,
+                    step=5.0,
+                    value=float(entry["surface_interval_before_min"]),
+                    key=f"planner_si_{row_id}",
+                    label_visibility="collapsed",
+                )
+                entry["surface_interval_before_min"] = new_si
+            if remove_col.button(t("remove_button"), key=f"planner_remove_{row_id}"):
+                remove_id = row_id
+        if remove_id is not None:
+            st.session_state[PLANNER_DIVES_KEY] = [
+                e for e in st.session_state[PLANNER_DIVES_KEY] if e["_id"] != remove_id
+            ]
+            st.rerun()
+        st.divider()
 
 # ---------------------------------------------------------------------------
 # Plan every committed dive plus the active dive as one chained series.
@@ -474,209 +477,220 @@ except (ValueError, TableRangeError) as exc:
     st.error(t("plan_series_engine_error", error=exc))
     st.stop()
 
-# A single, translated provenance disclaimer for the whole page — rendered
-# once here (not once per dive) even though a repetitive chain typically
-# touches multiple seeded tables (9-7, 9-8, 9-9) that would otherwise
-# each carry their own warning.
-if any(has_provenance_warning(result) for result in results):
-    render_provenance_banner()
+with right:
+    # A single, translated provenance disclaimer for the whole page —
+    # rendered once here (not once per dive) even though a repetitive chain
+    # typically touches multiple seeded tables (9-7, 9-8, 9-9) that would
+    # otherwise each carry their own warning.
+    if any(has_provenance_warning(result) for result in results):
+        render_provenance_banner()
 
-# ---------------------------------------------------------------------------
-# Results: a lone dive gets the clean single-result view; two or more
-# dives get the chained per-dive expander view.
-# ---------------------------------------------------------------------------
-if len(results) == 1:
-    result = results[0]
-    render_result_warnings(result)
+    # -----------------------------------------------------------------------
+    # Results: a lone dive gets the clean single-result view; two or more
+    # dives get the chained per-dive expander view.
+    # -----------------------------------------------------------------------
+    if len(results) == 1:
+        result = results[0]
+        render_result_warnings(result)
 
-    st.subheader(t("result_summary_header"))
-    m1, m2, m3, m4 = st.columns(4)
-    m1.metric(
-        t("status_label"),
-        t("status_no_deco") if result.no_decompression else t("status_deco_required"),
-    )
-    m2.metric(t("ndl_label"), f"{result.ndl_min:g}" if result.ndl_min is not None else "—")
-    m3.metric(
-        t("time_to_first_stop_label"),
-        f"{result.time_to_first_stop:g}" if result.time_to_first_stop is not None else "—",
-    )
-    m4.metric(t("repetitive_group_label"), result.repetitive_group or t("not_applicable"))
-
-    m5, m6, m7 = st.columns(3)
-    m5.metric(t("total_stop_time_label"), f"{result.total_stop_min:g}")
-    m6.metric(
-        t("residual_nitrogen_time_label"),
-        f"{result.residual_nitrogen_time_min:g}"
-        if result.residual_nitrogen_time_min is not None
-        else "—",
-    )
-    m7.metric(t("table_source_label"), result.table_source)
-
-    if gas_kind == "nitrox":
-        st.info(
-            t(
-                "nitrox_ead_info",
-                actual_depth=format_depth_both(result.actual_depth_fsw),
-                ead_depth=format_depth_both(result.ead_fsw),
-            )
+        st.subheader(t("result_summary_header"))
+        # 2x2 grid (not a 4-up row): the right column is narrower than full
+        # page width, and repetitive-group/stop-time labels are long enough
+        # to truncate in a 4-up row at this width.
+        row1a, row1b = st.columns(2)
+        row1a.metric(
+            t("status_label"),
+            t("status_no_deco") if result.no_decompression else t("status_deco_required"),
         )
-    elif gas_kind == "heliox":
-        phases = sorted({s.gas_phase for s in result.stops})
-        if phases:
-            st.info(t("heliox_gas_phases_info", phases=", ".join(phases)))
+        row1b.metric(t("ndl_label"), f"{result.ndl_min:g}" if result.ndl_min is not None else "—")
+        row2a, row2b = st.columns(2)
+        row2a.metric(
+            t("time_to_first_stop_label"),
+            f"{result.time_to_first_stop:g}" if result.time_to_first_stop is not None else "—",
+        )
+        row2b.metric(t("repetitive_group_label"), result.repetitive_group or t("not_applicable"))
 
-    st.subheader(t("decompression_schedule_header"))
-    if result.stops:
-        schedule_rows = [
-            {
-                t("col_stop_depth"): format_depth_both(stop.depth_fsw),
-                t("col_minutes"): stop.minutes,
-                t("col_gas_phase"): stop.gas_phase,
-            }
-            for stop in result.stops
-        ]
-        st.dataframe(schedule_rows, use_container_width=True, hide_index=True)
+        row3a, row3b = st.columns(2)
+        row3a.metric(t("total_stop_time_label"), f"{result.total_stop_min:g}")
+        row3b.metric(
+            t("residual_nitrogen_time_label"),
+            f"{result.residual_nitrogen_time_min:g}"
+            if result.residual_nitrogen_time_min is not None
+            else "—",
+        )
+        st.metric(t("table_source_label"), result.table_source)
+
+        if gas_kind == "nitrox":
+            st.info(
+                t(
+                    "nitrox_ead_info",
+                    actual_depth=format_depth_both(result.actual_depth_fsw),
+                    ead_depth=format_depth_both(result.ead_fsw),
+                )
+            )
+        elif gas_kind == "heliox":
+            phases = sorted({s.gas_phase for s in result.stops})
+            if phases:
+                st.info(t("heliox_gas_phases_info", phases=", ".join(phases)))
+
+        st.subheader(t("decompression_schedule_header"))
+        if result.stops:
+            schedule_rows = [
+                {
+                    t("col_stop_depth"): format_depth_both(stop.depth_fsw),
+                    t("col_minutes"): stop.minutes,
+                    t("col_gas_phase"): stop.gas_phase,
+                }
+                for stop in result.stops
+            ]
+            st.dataframe(schedule_rows, use_container_width=True, hide_index=True)
+        else:
+            st.success(t("no_deco_stops_success"))
+
+        st.subheader(t("dive_profile_header"))
+        depth_draggable = gas_kind != "heliox"
+        drag_hint_key = "drag_hint_with_depth" if depth_draggable else "drag_hint_no_depth"
+        st.caption(t(drag_hint_key))
+        st.caption(t("chart_drag_tip"))
+        st.caption(t("chart_units_caption", axis_unit=depth_label(units)))
+        chart = build_profile_chart(
+            max_depth_fsw=result.actual_depth_fsw or depth_fsw,
+            bottom_time_min=bottom_time_min,
+            result=result,
+            units=units,
+            depth_converter=lambda fsw: depth_to_display(fsw, units),
+        )
+
+        brush = alt.selection_interval(name="profile_brush", encodings=["x", "y"], zoom=False)
+        interactive_chart = chart.add_params(brush)
+
+        chart_state = st.altair_chart(
+            interactive_chart,
+            use_container_width=True,
+            on_select="rerun",
+            key=CHART_WIDGET_KEY,
+        )
+
+        # -------------------------------------------------------------------
+        # Read back the chart's selection. Vega-Lite's interval-brush
+        # payload for each encoding channel is a bounds array (empirically
+        # 2-3 numbers, unordered) rather than a strict [lo, hi] pair, so
+        # bounds are derived with min()/max() rather than by position. An
+        # empty dict means "no selection yet" (first load, or a plain click
+        # with no drag) and is left untouched — never crash, never treat it
+        # as a zero-size selection.
+        #
+        # The new values are staged into PENDING_*_KEY rather than written
+        # directly to the number-input keys: those inputs were already
+        # instantiated above in this same run (in the left column), and
+        # Streamlit forbids writing to a widget's key after it's been
+        # created in the same run. The staged values are applied at the top
+        # of the *next* run, before the inputs are recreated (see above).
+        # The signature guard (comparing against the last-applied selection)
+        # is what prevents an infinite rerun loop: without it, every rerun
+        # would re-read the same unchanged selection and force another
+        # rerun forever.
+        # -------------------------------------------------------------------
+        selection: dict | None = None
+        try:
+            selection = chart_state["selection"]["profile_brush"]
+        except (TypeError, KeyError):
+            selection = None
+
+        if selection:
+            time_bounds = selection.get("time_min")
+            depth_bounds = selection.get("depth_display")
+            sig = (
+                tuple(time_bounds) if time_bounds else None,
+                tuple(depth_bounds) if depth_bounds else None,
+            )
+            if (time_bounds or depth_bounds) and sig != st.session_state.get(CHART_SEL_SIG_KEY):
+                st.session_state[CHART_SEL_SIG_KEY] = sig
+                applied = False
+                if time_bounds:
+                    new_time = _clamp(max(time_bounds), 1.0, MAX_TIME_MIN)
+                    st.session_state[PENDING_TIME_KEY] = new_time
+                    applied = True
+                if depth_bounds and depth_draggable:
+                    # The y-axis domain is pinned descending (surface at
+                    # top), so the deeper edge of the drag is the larger
+                    # data value regardless of its on-screen (pixel)
+                    # position.
+                    max_depth_display = depth_to_display(MAX_DEPTH_FSW, units)
+                    new_depth = _clamp(max(depth_bounds), 0.0, max_depth_display)
+                    st.session_state[PENDING_DEPTH_KEY] = new_depth
+                    applied = True
+                if applied:
+                    st.rerun()
+
+        st.caption(t("idealized_plan_caption"))
+
     else:
-        st.success(t("no_deco_stops_success"))
+        st.subheader(t("chained_results_header"))
+        all_entries = list(st.session_state[PLANNER_DIVES_KEY]) + [
+            {
+                "gas_kind": gas_kind,
+                "fo2": fo2,
+                "fhe": fhe,
+                "depth_fsw": depth_fsw,
+                "bottom_time_min": bottom_time_min,
+                "surface_interval_before_min": active_si_min,
+            }
+        ]
+        for i, (entry, result) in enumerate(zip(all_entries, results)):
+            with st.expander(
+                t(
+                    "dive_expander_title",
+                    index=i + 1,
+                    gas=gas_label(entry["gas_kind"]),
+                    depth=format_depth_both(entry["depth_fsw"]),
+                    minutes=entry["bottom_time_min"],
+                ),
+                expanded=(i == len(results) - 1),
+            ):
+                render_result_warnings(result)
 
-    st.subheader(t("dive_profile_header"))
-    depth_draggable = gas_kind != "heliox"
-    drag_hint_key = "drag_hint_with_depth" if depth_draggable else "drag_hint_no_depth"
-    st.caption(t(drag_hint_key))
-    st.caption(t("chart_drag_tip"))
-    st.caption(t("chart_units_caption", axis_unit=depth_label(units)))
-    chart = build_profile_chart(
-        max_depth_fsw=result.actual_depth_fsw or depth_fsw,
-        bottom_time_min=bottom_time_min,
-        result=result,
-        units=units,
-        depth_converter=lambda fsw: depth_to_display(fsw, units),
-    )
+                # 2x2 grid inside the expander (not a 4-up row): the right
+                # column is already narrower than full page width, and the
+                # expander adds further inset.
+                erow1a, erow1b = st.columns(2)
+                erow1a.metric(
+                    t("status_label"),
+                    t("status_no_deco") if result.no_decompression else t("status_deco"),
+                )
+                erow1b.metric(t("ending_group_label"), result.repetitive_group or t("not_applicable"))
+                erow2a, erow2b = st.columns(2)
+                erow2a.metric(
+                    t("rnt_applied_label"),
+                    f"{result.residual_nitrogen_time_min:g}"
+                    if result.residual_nitrogen_time_min is not None
+                    else "—",
+                )
+                erow2b.metric(t("total_stop_time_label"), f"{result.total_stop_min:g}")
 
-    brush = alt.selection_interval(name="profile_brush", encodings=["x", "y"], zoom=False)
-    interactive_chart = chart.add_params(brush)
+                if result.stops:
+                    schedule_rows = [
+                        {
+                            t("col_stop_depth"): format_depth_both(s.depth_fsw),
+                            t("col_minutes"): s.minutes,
+                            t("col_gas_phase"): s.gas_phase,
+                        }
+                        for s in result.stops
+                    ]
+                    st.dataframe(schedule_rows, use_container_width=True, hide_index=True)
+                else:
+                    st.success(t("no_deco_stops_success_short"))
 
-    chart_state = st.altair_chart(
-        interactive_chart,
-        use_container_width=True,
-        on_select="rerun",
-        key=CHART_WIDGET_KEY,
-    )
-
-    # ---------------------------------------------------------------------
-    # Read back the chart's selection. Vega-Lite's interval-brush payload
-    # for each encoding channel is a bounds array (empirically 2-3
-    # numbers, unordered) rather than a strict [lo, hi] pair, so bounds
-    # are derived with min()/max() rather than by position. An empty dict
-    # means "no selection yet" (first load, or a plain click with no
-    # drag) and is left untouched — never crash, never treat it as a
-    # zero-size selection.
-    #
-    # The new values are staged into PENDING_*_KEY rather than written
-    # directly to the number-input keys: those inputs were already
-    # instantiated above in this same run, and Streamlit forbids writing
-    # to a widget's key after it's been created in the same run. The
-    # staged values are applied at the top of the *next* run, before the
-    # inputs are recreated (see above). The signature guard (comparing
-    # against the last-applied selection) is what prevents an infinite
-    # rerun loop: without it, every rerun would re-read the same
-    # unchanged selection and force another rerun forever.
-    # ---------------------------------------------------------------------
-    selection: dict | None = None
-    try:
-        selection = chart_state["selection"]["profile_brush"]
-    except (TypeError, KeyError):
-        selection = None
-
-    if selection:
-        time_bounds = selection.get("time_min")
-        depth_bounds = selection.get("depth_display")
-        sig = (
-            tuple(time_bounds) if time_bounds else None,
-            tuple(depth_bounds) if depth_bounds else None,
-        )
-        if (time_bounds or depth_bounds) and sig != st.session_state.get(CHART_SEL_SIG_KEY):
-            st.session_state[CHART_SEL_SIG_KEY] = sig
-            applied = False
-            if time_bounds:
-                new_time = _clamp(max(time_bounds), 1.0, MAX_TIME_MIN)
-                st.session_state[PENDING_TIME_KEY] = new_time
-                applied = True
-            if depth_bounds and depth_draggable:
-                # The y-axis domain is pinned descending (surface at
-                # top), so the deeper edge of the drag is the larger data
-                # value regardless of its on-screen (pixel) position.
-                max_depth_display = depth_to_display(MAX_DEPTH_FSW, units)
-                new_depth = _clamp(max(depth_bounds), 0.0, max_depth_display)
-                st.session_state[PENDING_DEPTH_KEY] = new_depth
-                applied = True
-            if applied:
-                st.rerun()
-
-    st.caption(t("idealized_plan_caption"))
-
-else:
-    st.subheader(t("chained_results_header"))
-    all_entries = list(st.session_state[PLANNER_DIVES_KEY]) + [
-        {
-            "gas_kind": gas_kind,
-            "fo2": fo2,
-            "fhe": fhe,
-            "depth_fsw": depth_fsw,
-            "bottom_time_min": bottom_time_min,
-            "surface_interval_before_min": active_si_min,
-        }
-    ]
-    for i, (entry, result) in enumerate(zip(all_entries, results)):
-        with st.expander(
-            t(
-                "dive_expander_title",
-                index=i + 1,
-                gas=gas_label(entry["gas_kind"]),
-                depth=format_depth_both(entry["depth_fsw"]),
-                minutes=entry["bottom_time_min"],
-            ),
-            expanded=(i == len(results) - 1),
-        ):
-            render_result_warnings(result)
-
-            m1, m2, m3, m4 = st.columns(4)
-            m1.metric(
-                t("status_label"),
-                t("status_no_deco") if result.no_decompression else t("status_deco"),
-            )
-            m2.metric(t("ending_group_label"), result.repetitive_group or t("not_applicable"))
-            m3.metric(
-                t("rnt_applied_label"),
-                f"{result.residual_nitrogen_time_min:g}"
-                if result.residual_nitrogen_time_min is not None
-                else "—",
-            )
-            m4.metric(t("total_stop_time_label"), f"{result.total_stop_min:g}")
-
-            if result.stops:
-                schedule_rows = [
-                    {
-                        t("col_stop_depth"): format_depth_both(s.depth_fsw),
-                        t("col_minutes"): s.minutes,
-                        t("col_gas_phase"): s.gas_phase,
-                    }
-                    for s in result.stops
-                ]
-                st.dataframe(schedule_rows, use_container_width=True, hide_index=True)
-            else:
-                st.success(t("no_deco_stops_success_short"))
-
-            chart = build_profile_chart(
-                max_depth_fsw=result.actual_depth_fsw or entry["depth_fsw"],
-                bottom_time_min=entry["bottom_time_min"],
-                result=result,
-                units=units,
-                depth_converter=lambda fsw: depth_to_display(fsw, units),
-            )
-            st.altair_chart(chart, use_container_width=True)
-            st.caption(t("chart_units_caption", axis_unit=depth_label(units)))
-            st.caption(t("idealized_plan_caption"))
+                chart = build_profile_chart(
+                    max_depth_fsw=result.actual_depth_fsw or entry["depth_fsw"],
+                    bottom_time_min=entry["bottom_time_min"],
+                    result=result,
+                    units=units,
+                    depth_converter=lambda fsw: depth_to_display(fsw, units),
+                )
+                st.altair_chart(chart, use_container_width=True)
+                st.caption(t("chart_units_caption", axis_unit=depth_label(units)))
+                st.caption(t("idealized_plan_caption"))
 
 st.divider()
 
