@@ -64,8 +64,18 @@ def _read_all() -> dict[str, dict]:
     Tolerates "not hydrated yet" (``None``) and any malformed/foreign
     value left under the key by returning an empty map rather than
     raising — a not-yet-loaded store must never crash the page.
+
+    On Streamlit Cloud's first load the underlying component's
+    ``storedItems`` can still be ``None`` (unhydrated), in which case its
+    ``getItem`` itself raises ``TypeError: argument of type 'NoneType' is
+    not a container or iterable`` before we ever see a value. Wrap the
+    call so that condition degrades to an empty map instead of crashing
+    the page.
     """
-    raw = _store().getItem(_NAMESPACE_KEY)
+    try:
+        raw = _store().getItem(_NAMESPACE_KEY)
+    except Exception:
+        return {}
     if not raw:
         return {}
     try:
@@ -78,7 +88,19 @@ def _read_all() -> dict[str, dict]:
 
 
 def _write_all(profiles: dict[str, dict], *, write_key: str) -> None:
-    _store().setItem(_NAMESPACE_KEY, json.dumps(profiles), key=write_key)
+    # Serialize first, outside the guard, so a genuine serialization
+    # error still raises rather than being silently swallowed.
+    payload = json.dumps(profiles)
+    try:
+        _store().setItem(_NAMESPACE_KEY, payload, key=write_key)
+    except TypeError:
+        # Unhydrated first load: the component's ``storedItems`` is still
+        # ``None``, so its final ``self.storedItems[itemKey] = ...`` raises
+        # a bare ``TypeError`` — but only AFTER the browser write round-trip
+        # has already been dispatched, so no save is actually lost. A real
+        # component failure raises a Streamlit component error (not a bare
+        # ``TypeError``) and is deliberately left to propagate.
+        pass
 
 
 def list_profiles() -> list[str]:
